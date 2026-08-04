@@ -5,6 +5,14 @@
 _jobs/
 _cache/
 
+# generated run outputs — videos/images, too heavy for the repo
+_storage/atlas_storyboard/
+bench/_storage/
+
+# the libraries below are source assets, keep them tracked
+!_storage/character_library/
+!_storage/audio_library/
+
 # python
 __pycache__/
 *.pyc

@@ -1,5 +1,0 @@
-{"scene_id": "scene_01_opening_broll", "model": "Veo 3.1 Lite", "task": "image-to-video", "duration_s": 4.0, "cost_usd": 0.2, "attempts": 1, "status": "ok"}
-{"scene_id": "scene_02_intro_manual_purpose_1", "model": "Veo 3.1 Fast", "task": "reference-to-video", "duration_s": 8.0, "cost_usd": 0.8, "attempts": 1, "status": "ok"}
-{"scene_id": "scene_03_intro_manual_purpose_2", "model": "Veo 3.1 Lite", "task": "image-to-video", "duration_s": 8.0, "cost_usd": 0.4, "attempts": 1, "status": "ok"}
-{"scene_id": "scene_04_intro_scope_1", "model": "Veo 3.1 Lite", "task": "image-to-video", "duration_s": 8.0, "cost_usd": 0.4, "attempts": 1, "status": "ok"}
-{"scene_id": "scene_08_intro_closing_broll", "model": "Veo 3.1 Lite", "task": "image-to-video", "duration_s": 4.0, "cost_usd": 0.2, "attempts": 1, "status": "ok"}

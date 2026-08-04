@@ -1,9 +1,0 @@
-1
-00:00:04,400 --> 00:00:11,987
-PowerOne tiles, termasuk Salesforce, Epicor Mobile, AI Desktop,
-Pico Concierge, Partners, dan Helpdesk, memberikan akses cepat.
-
-2
-00:00:11,987 --> 00:00:19,974
-Mengklik tile seperti Helpdesk akan membawa Anda
-langsung ke sistem internal atau portal layanan terkait.

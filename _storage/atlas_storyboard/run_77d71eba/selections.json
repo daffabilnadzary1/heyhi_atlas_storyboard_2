@@ -1,0 +1,11 @@
+{
+  "run_id": "run_77d71eba",
+  "voice_source": "elevenlabs",
+  "selections": [
+    {
+      "placeholder_id": "char_narrator",
+      "char_id": "char_female_formal_cartoon_1",
+      "audio_id": "XfNU2rGpBa01ckF309OY"
+    }
+  ]
+}

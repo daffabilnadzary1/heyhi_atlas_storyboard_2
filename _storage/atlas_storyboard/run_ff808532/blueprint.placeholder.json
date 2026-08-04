@@ -1,0 +1,618 @@
+{
+  "title": "TechNova HR Policies for New Employees",
+  "style": "A cartoon modern 2d art style, fun and playful, with consistent character design and wardrobe across all scenes.",
+  "style_type": "cartoon",
+  "character_count": 1,
+  "music_style": "Upbeat electronic instrumental with soft synth pads, motivational and modern — onboarding video mood",
+  "backgrounds": [
+    {
+      "id": "bg_office_lobby",
+      "prompt": "An illustration of a modern, bright, and inviting office lobby. Clean architectural lines, comfortable seating areas, and lush but minimal indoor plants. Illuminated by soft, natural light filtering through large windows, creating a welcoming and professional atmosphere. Smooth, polished surfaces and subtle textures. Wide establishing shot, NO CHARACTERS in frame. Empty environment plate. 16:9 format."
+    },
+    {
+      "id": "bg_meeting_room",
+      "prompt": "An illustration of a clean, well-lit meeting room. A large, sleek conference table with modern chairs arranged around it. A large, blank screen on one wall. Illuminated by bright, even overhead lighting and natural light from a window, creating a focused and productive atmosphere. Smooth, uncluttered surfaces and contemporary design. Wide establishing shot, NO CHARACTERS in frame. Empty environment plate. 16:9 format."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene_001",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "",
+      "prompt": "Cinematography: Wide establishing shot of a modern office lobby, with a slow, smooth camera pan from left to right, revealing the welcoming space. Subject: The empty, inviting environment of a corporate lobby, with no people present. Action: The camera slowly pans across the lobby, showcasing its modern design and bright atmosphere. Context: A contemporary office lobby with comfortable seating, subtle branding elements, and large windows. Style and Ambience: Welcoming and professional mood, illuminated by soft, natural light, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Gentle hum of office air conditioning, distant, muffled city sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "background:bg_office_lobby",
+      "type": "B-Roll",
+      "broll_role": "opening",
+      "length": 4.0,
+      "aspect_ratio": "16:9",
+      "topic": null,
+      "characters": [],
+      "audios": []
+    },
+    {
+      "id": "scene_002",
+      "task": "reference-to-video",
+      "model": "Veo 3.1 Fast",
+      "text": "Welcome to TechNova Solutions. This Human Resources Policy Manual is designed to provide employees with a clear understanding.",
+      "prompt": "Cinematography: Medium shot, char_narrator framed from the chest up, looking directly at the viewer. Subject: char_narrator, a friendly and professional figure, standing in a modern office lobby. Action: char_narrator gestures with an open hand, then smiles warmly, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Do not display the storyboard grid at the start of the clip; begin animation directly from Panel 1 as depicted in the reference. Context: A bright, contemporary office lobby with soft lighting. Style and Ambience: Welcoming and informative mood, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "storyboard:sb_intro",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Introduction & Purpose",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_003",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "It covers our company's expectations, workplace standards, and the benefits available to our team members.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator gestures broadly to indicate scope, then brings hands together as if to encompass all team members, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_002",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Introduction & Purpose",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_004",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "These policies apply to all regular, full-time, part-time, and temporary employees.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a sweeping gesture to include various categories, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_003",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Introduction & Purpose",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_005",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "This applies unless otherwise specified.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator raises an index finger briefly to emphasize a specific point, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_004",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Introduction & Purpose",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_006",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "Management reserves the right to modify, revoke, suspend, or terminate any policy.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a decisive, downward hand gesture to convey authority, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_005",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Introduction & Purpose",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_007",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "This is at its sole discretion, with or without prior notice.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a slight, thoughtful nod, then looks directly at the viewer with a neutral expression, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_006",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Introduction & Purpose",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_008",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "",
+      "prompt": "Cinematography: Medium shot, char_narrator framed from the chest up, holding perfectly still, frozen mid-moment. Subject: char_narrator, motionless in the office lobby. Action: The camera holds; the moment freezes, with char_narrator holding a still, neutral pose. Context: A bright, contemporary office lobby. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_007",
+      "type": "B-Roll",
+      "broll_role": "closing",
+      "length": 1.0,
+      "aspect_ratio": "16:9",
+      "topic": "Introduction & Purpose",
+      "characters": [],
+      "audios": []
+    },
+    {
+      "id": "scene_009",
+      "task": "reference-to-video",
+      "model": "Veo 3.1 Fast",
+      "text": "TechNova Solutions is fundamentally committed to the principle of equal employment opportunity.",
+      "prompt": "Cinematography: Medium shot, char_narrator framed from the chest up, looking directly at the viewer. Subject: char_narrator, a professional figure, standing in a modern meeting room. Action: char_narrator makes a firm, open-handed gesture of commitment, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Do not display the storyboard grid at the start of the clip; begin animation directly from Panel 1 as depicted in the reference. Context: A clean, well-lit meeting room with a large table. Style and Ambience: Serious and committed mood, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Quiet hum of a projector, distant office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "storyboard:sb_eeo",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Equal Employment Opportunity (EEO)",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_010",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "We prohibit discrimination and harassment of any kind based on race, color, sex, or religion.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator shakes their head slightly to emphasize the prohibition, then makes a clear, separating hand gesture, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Quiet hum of a projector, distant office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_009",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Equal Employment Opportunity (EEO)",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_011",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "This also includes sexual orientation, national origin, disability, or genetic information.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator extends an open hand, palm up, as if encompassing additional categories, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Quiet hum of a projector, distant office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_010",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Equal Employment Opportunity (EEO)",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_012",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "It covers pregnancy, or any other protected characteristic as outlined by federal or state laws.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator points to an imaginary document or list, emphasizing the legal framework, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Quiet hum of a projector, distant office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_011",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Equal Employment Opportunity (EEO)",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_013",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "This also includes local laws.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a small, inclusive gesture with both hands, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Quiet hum of a projector, distant office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_012",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Equal Employment Opportunity (EEO)",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_014",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "This policy applies to all terms and conditions of employment, including recruiting, hiring, placement, and promotion.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a broad, encompassing gesture with both hands, indicating wide applicability, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Quiet hum of a projector, distant office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_013",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Equal Employment Opportunity (EEO)",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_015",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "It also covers termination, layoff, recall, transfer, leaves of absence, compensation, and training.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator continues the encompassing gesture, then makes a slight nod of affirmation, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Quiet hum of a projector, distant office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_014",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Equal Employment Opportunity (EEO)",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_016",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "",
+      "prompt": "Cinematography: Medium shot, char_narrator framed from the chest up, holding perfectly still, frozen mid-moment. Subject: char_narrator, motionless in the meeting room. Action: The camera holds; the moment freezes, with char_narrator holding a still, neutral pose. Context: A clean, well-lit meeting room. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Quiet hum of a projector, distant office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_015",
+      "type": "B-Roll",
+      "broll_role": "closing",
+      "length": 1.0,
+      "aspect_ratio": "16:9",
+      "topic": "Equal Employment Opportunity (EEO)",
+      "characters": [],
+      "audios": []
+    },
+    {
+      "id": "scene_017",
+      "task": "reference-to-video",
+      "model": "Veo 3.1 Fast",
+      "text": "We strive to maintain a work environment that fosters mutual employee respect.",
+      "prompt": "Cinematography: Medium shot, char_narrator framed from the chest up, looking directly at the viewer. Subject: char_narrator, a professional figure, standing in a modern office setting. Action: char_narrator holds both hands up in a 'stop' gesture, then places a hand over their heart to convey sincerity, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Do not display the storyboard grid at the start of the clip; begin animation directly from Panel 1 as depicted in the reference. Context: A bright, contemporary office lobby with soft lighting. Style and Ambience: Empathetic and firm mood, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "storyboard:sb_harassment",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_018",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "This promotes congenial relationships between employees.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a gentle, inclusive gesture with both hands, symbolizing positive relationships, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_017",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_019",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "We explicitly prohibit any form of harassment, joking remarks, or other abusive conduct.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a firm, stopping gesture with an open palm, conveying a clear prohibition, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_018",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_020",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "This includes verbal, non-verbal, and physical conduct.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator uses distinct hand gestures to represent verbal, non-verbal, and physical actions, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_019",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_021",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "It is directed at an individual's race, sexual orientation, disability, or religion.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a specific pointing gesture to emphasize the protected characteristics, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_020",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_022",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "Employees who believe they have been subjected to harassment must immediately report the incident.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a clear, urgent gesture, indicating the need for immediate action, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_021",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_023",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "Report it to their direct supervisor or the HR department.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator points firmly towards an unseen reporting mechanism or person, then gestures to indicate two options, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_022",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_024",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "TechNova Solutions strictly forbids retaliation against anyone who, in good faith, reports a violation.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator makes a strong, protective gesture with both hands, conveying a shield against retaliation, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_023",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_025",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "This also applies to those who participate in an investigation.",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_narrator. Action: char_narrator gives a reassuring nod, indicating safety and protection for participants, the character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_024",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [
+        "char_narrator"
+      ],
+      "audios": [
+        {
+          "char_id": "char_narrator",
+          "audio_id": "audio_narrator_voice"
+        }
+      ]
+    },
+    {
+      "id": "scene_026",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "",
+      "prompt": "Cinematography: Medium shot, char_narrator framed from the chest up, holding perfectly still, frozen mid-moment. Subject: char_narrator, motionless in the office lobby. Action: The camera holds; the moment freezes, with char_narrator holding a still, neutral pose. Context: A bright, contemporary office lobby. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, writing, labels, or numerical characters visible on any object, wall, or background. Ambient noise: Soft, ambient office sounds. Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:scene_025",
+      "type": "B-Roll",
+      "broll_role": "closing",
+      "length": 1.0,
+      "aspect_ratio": "16:9",
+      "topic": "Anti-Harassment and Bullying Policy",
+      "characters": [],
+      "audios": []
+    }
+  ],
+  "storyboard": [
+    {
+      "id": "sb_intro",
+      "model": "gemini-2.5-flash-image",
+      "prompt": "A 2x2 multipanel storyboard grid, showing four sequential moments from an 8-second scene as a comic strip. Panel 1 (top-left, 00:00-00:02): in the foreground, char_narrator stands confidently, gesturing with an open hand towards the viewer; in the background, a modern office lobby. Panel 2 (top-right, 00:02-00:04): char_narrator smiles warmly, looking directly at the viewer, with hands clasped loosely in front. Panel 3 (bottom-left, 00:04-00:06): char_narrator gestures towards an unseen group, indicating inclusion and teamwork. Panel 4 (bottom-right, 00:06-00:08): char_narrator nods reassuringly, maintaining eye contact with the viewer. Character design and wardrobe identical across panels. Clean black panel borders. 16:9 format.",
+      "reference": [
+        "char_narrator",
+        "bg_office_lobby"
+      ]
+    },
+    {
+      "id": "sb_eeo",
+      "model": "gemini-2.5-flash-image",
+      "prompt": "A 2x2 multipanel storyboard grid, showing four sequential moments from an 8-second scene as a comic strip. Panel 1 (top-left, 00:00-00:02): in the foreground, char_narrator stands in a modern meeting room, making a firm, open-handed gesture of commitment; in the background, a clean meeting room. Panel 2 (top-right, 00:02-00:04): char_narrator looks serious and focused, shaking their head slightly to emphasize a point. Panel 3 (bottom-left, 00:04-00:06): char_narrator extends an open hand, palm up, as if offering support or inclusion. Panel 4 (bottom-right, 00:06-00:08): char_narrator points to an imaginary chart or document, illustrating a comprehensive policy. Character design and wardrobe identical across panels. Clean black panel borders. 16:9 format.",
+      "reference": [
+        "char_narrator",
+        "bg_meeting_room"
+      ]
+    },
+    {
+      "id": "sb_harassment",
+      "model": "gemini-2.5-flash-image",
+      "prompt": "A 2x2 multipanel storyboard grid, showing four sequential moments from an 8-second scene as a comic strip. Panel 1 (top-left, 00:00-00:02): in the foreground, char_narrator stands with a serious expression, holding both hands up in a 'stop' gesture; in the background, a modern office setting. Panel 2 (top-right, 00:02-00:04): char_narrator looks empathetic, placing a hand over their heart. Panel 3 (bottom-left, 00:04-00:06): char_narrator points firmly towards an unseen reporting mechanism or person. Panel 4 (bottom-right, 00:06-00:08): char_narrator gives a reassuring nod, indicating safety and protection. Character design and wardrobe identical across panels. Clean black panel borders. 16:9 format.",
+      "reference": [
+        "char_narrator",
+        "bg_office_lobby"
+      ]
+    }
+  ]
+}

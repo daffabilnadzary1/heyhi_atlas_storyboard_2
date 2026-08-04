@@ -1,0 +1,16 @@
+{
+  "run_id": "run_8df6756e",
+  "voice_source": "elevenlabs",
+  "selections": [
+    {
+      "placeholder_id": "char_employee",
+      "char_id": "char_female_formal_cartoon_1",
+      "audio_id": "XfNU2rGpBa01ckF309OY"
+    },
+    {
+      "placeholder_id": "char_manager",
+      "char_id": "char_male_formal_cartoon_1",
+      "audio_id": "v6KgbPaQh6lAmMpmmtcH"
+    }
+  ]
+}

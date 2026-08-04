@@ -1,0 +1,26 @@
+{
+  "taskId": "61051c5257b35fcdcadf47426a03754c",
+  "paramJson": "{\"duration\":6,\"enableTranslation\":true,\"generationType\":\"FIRST_AND_LAST_FRAMES_2_VIDEO\",\"imageUrls\":[\"https://tempfile.redpandaai.co/kieai/11545824/veo-inputs/1785240862388-b6nr0a0mbsw.png\"],\"aspectRatio\":\"16:9\",\"model\":\"veo3\",\"enableFallback\":false,\"resolution\":\"720p\",\"prompt\":\"\\n\\nTransform the provided image into a 5-second premium editorial documentary paper-collage animation. Preserve the final composition of the provided image exactly. Do not redesign, reposition, resize, or replace any element. The provided image is the FINISHED frame that the animation builds toward.\\n\\nStyle: hand-cut documentary paper collage in motion. Aged newsprint and archival surfaces, halftone photo cutouts, torn edges, tape, stamps, red string, typewriter strips. Every element moves as a rigid physical paper piece. Visible cutout thickness, print grain, soft layered shadows. Stop-motion cadence, stepped easing, 2-3 frame holds, the hand-made \\\"cutting on twos\\\" feel. Never smooth CGI motion.\\n\\nCAMERA, STRICT: the camera stays completely locked for the entire clip. No zoom, no pan, no tilt, no rotation, no orbit, no dolly, no tracking, no handheld shake, no focus pulls, no reframing, no cuts, no transitions, no morphing, no object replacement, no time skips. One continuous static shot.\\n\\n0 TO 3.5 SECONDS, BUILD-ON ASSEMBLY: the frame opens on the EMPTY background plate only: the bare aged-newsprint or archival surface with its stains, grain, and any fixed scaffolding (a map base, a timeline line, a corkboard), with every story element absent. Elements then enter one by one, back to front, in narrative order: background scraps settle first, then the hero cutout slides in with paper drag and a small settle, supporting cutouts drop or pin on with a 2-frame stamp settle, tape presses down, typewriter strips slide in, stamps slap on, red string draws itself from pin to pin, marker underlines and arrows draw themselves last. Each entrance lands with a tiny handcrafted bounce and casts a real layered shadow. No element moves again after it lands. By 3.5 seconds the frame exactly matches the provided image.\\n\\n3.5 TO 5 SECONDS, LIVING PAPER POSTER: everything holds position. Only subtle life remains: paper corners lift a millimeter in a draft, halftone dots shimmer faintly, string tension quivers once, shadows breathe, stamp ink glistens subtly. Nothing changes location, nothing scales, nothing rotates significantly, nothing enters or exits.\\n\\nAUDIO: no music, no narration, no voices. Only close-up paper ASMR and faint scene-appropriate ambience: paper sliding, cardstock taps, tape press, stamp thud, string zip, pin click, soft room tone. All subtle.\\n\\nFINAL RULE: the finished clip must feel like a real editorial paper collage assembling itself on a table, then holding as a living poster, matching the provided image exactly from 3.5 seconds to the end.\\n\"}",
+  "response": {
+    "taskId": "61051c5257b35fcdcadf47426a03754c",
+    "resolution": "720p",
+    "originUrls": null,
+    "resultUrls": [
+      "https://tempfile.aiquickdraw.com/v/61051c5257b35fcdcadf47426a03754c_1785240941.mp4"
+    ],
+    "fullResultUrls": null,
+    "full_result_urls": null,
+    "hasAudioList": [
+      true
+    ],
+    "seeds": [
+      82845
+    ]
+  },
+  "successFlag": 1,
+  "fallbackFlag": false,
+  "completeTime": 1785240944000,
+  "createTime": 1785240863000,
+  "errorCode": null,
+  "errorMessage": ""
+}

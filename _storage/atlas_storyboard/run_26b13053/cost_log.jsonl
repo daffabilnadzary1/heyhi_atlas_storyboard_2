@@ -1,0 +1,45 @@
+{"layer": "L2", "provider": "gemini", "model": "gemini-2.5-flash", "unit": "token_in", "quantity": 4150.0, "cost_usd": 0.001245, "measured": true, "attempt": 1, "director_outcome": "ok"}
+{"layer": "L2", "provider": "gemini", "model": "gemini-2.5-flash", "unit": "token_out", "quantity": 8819.0, "cost_usd": 0.022048, "measured": true, "attempt": 1, "director_outcome": "ok"}
+{"layer": "L2", "provider": "gemini", "model": "gemini-2.5-flash", "unit": "token_in", "quantity": 4501.0, "cost_usd": 0.00135, "measured": true, "attempt": 2, "director_outcome": "ok"}
+{"layer": "L2", "provider": "gemini", "model": "gemini-2.5-flash", "unit": "token_out", "quantity": 8551.0, "cost_usd": 0.021378, "measured": true, "attempt": 2, "director_outcome": "ok"}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "image", "quantity": 1.0, "cost_usd": 0.039, "measured": true, "asset": "bg_modern_office.png", "attempts": 1}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "token_in", "quantity": 96.0, "cost_usd": null, "measured": true, "asset": "bg_modern_office.png", "priced": false}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "token_out", "quantity": 1290.0, "cost_usd": null, "measured": true, "asset": "bg_modern_office.png", "priced": false}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "image", "quantity": 1.0, "cost_usd": 0.039, "measured": true, "asset": "sb_intro.png", "attempts": 1}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "token_in", "quantity": 750.0, "cost_usd": null, "measured": true, "asset": "sb_intro.png", "priced": false}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "token_out", "quantity": 1290.0, "cost_usd": null, "measured": true, "asset": "sb_intro.png", "priced": false}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "image", "quantity": 1.0, "cost_usd": 0.039, "measured": true, "asset": "sb_eeo.png", "attempts": 1}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "token_in", "quantity": 769.0, "cost_usd": null, "measured": true, "asset": "sb_eeo.png", "priced": false}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "token_out", "quantity": 1290.0, "cost_usd": null, "measured": true, "asset": "sb_eeo.png", "priced": false}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "image", "quantity": 1.0, "cost_usd": 0.039, "measured": true, "asset": "sb_harassment.png", "attempts": 1}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "token_in", "quantity": 759.0, "cost_usd": null, "measured": true, "asset": "sb_harassment.png", "priced": false}
+{"layer": "L4", "provider": "gemini", "model": "gemini-2.5-flash-image", "unit": "token_out", "quantity": 1290.0, "cost_usd": null, "measured": true, "asset": "sb_harassment.png", "priced": false}
+{"layer": "L5", "provider": "kie.ai", "model": "kie.ai", "unit": "credit", "quantity": 30.0, "cost_usd": 0.15, "measured": true, "veo_model": "Veo 3.1 Lite", "credits_before": 7990.0, "credits_after": 7960.0, "scene_id": "scene_opening_broll", "task": "image-to-video", "attempts": 1}
+{"layer": "L5", "provider": "kie.ai", "model": "kie.ai", "unit": "credit", "quantity": 60.0, "cost_usd": 0.3, "measured": true, "veo_model": "Veo 3.1 Fast", "credits_before": 7960.0, "credits_after": 7900.0, "scene_id": "scene_intro_1", "task": "reference-to-video", "attempts": 1}
+{"layer": "L6", "provider": "elevenlabs", "model": "eleven_multilingual_sts_v2", "unit": "second", "quantity": 8.0, "cost_usd": 0.0264, "measured": true, "scene_id": "scene_intro_1"}
+{"layer": "L6", "provider": "gemini", "model": "gemini-2.5-flash", "unit": "token_in", "quantity": 322.0, "cost_usd": 9.7e-05, "measured": true, "scene_id": "scene_intro_1", "purpose": "diarization"}
+{"layer": "L6", "provider": "gemini", "model": "gemini-2.5-flash", "unit": "token_out", "quantity": 699.0, "cost_usd": 0.001748, "measured": true, "scene_id": "scene_intro_1", "purpose": "diarization"}
+{"layer": "L7", "provider": "gemini", "model": "lyria-3-clip-preview", "unit": "calls", "quantity": 1, "cost_usd": 0.04, "measured": true}
+
+
+{
+  "run_id": "run_26b13053",
+  "total_usd": 0.720266,
+  "by_layer": {
+    "L2": 0.046021,
+    "L4": 0.156,
+    "L5": 0.45,
+    "L6": 0.028245,
+    "L7": 0.04
+  },
+  "by_model": {
+    "eleven_multilingual_sts_v2": 0.0264,
+    "gemini-2.5-flash": 0.047866,
+    "gemini-2.5-flash-image": 0.156,
+    "kie.ai": 0.45,
+    "lyria-3-clip-preview": 0.04
+  },
+  "events": 22,
+  "unpriced": [],
+  "pricing_last_checked": "2026-08-01"
+}

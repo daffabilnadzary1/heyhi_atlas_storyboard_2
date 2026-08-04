@@ -1,20 +1,16 @@
 """
-This file contains the director configurations as well
-the place to get the API keys from the env
+Director configuration and Gemini client creation.
 
-Two things live here and nothing else:
+Contains only:
 
-  * DirectorConfig — every knob the director (L2) reads. The first seven fields
-    come straight from the user's config.json (schemas.ConfigIn maps onto them
-    1:1, by name — renaming a field here silently breaks that mapping in
-    main.run_director, which does DirectorConfig(**config.json)). The last four
-    are PACING knobs the user never sees; they are not in ConfigIn, so they can
-    only be changed in code.
+  * DirectorConfig — all settings the director (L2) reads. The first seven
+    fields map 1:1 to schemas.ConfigIn (used by DirectorConfig(**config.json)),
+    so renaming them breaks config loading. The remaining fields are internal
+    pacing constants, configurable only in code.
 
-  * make_client — the single place the Gemini API key is read.
+  * make_client — the only place the Gemini API key is read.
 
-load_dotenv() runs at import, so anything importing app.config gets .env
-loaded.
+load_dotenv() runs on import so .env is available everywhere.
 """
 
 import os
@@ -40,22 +36,16 @@ class DirectorConfig:
     aspect_ratio: AspectRatio = "16:9"
     blueprint_type: BlueprintType = "opening"
 
-    # --- pacing / length budget: prompt text AND validator thresholds ---
-    # These decide the director's word ceiling per speaking scene:
-    #   max_words = words_per_second * max_scene_seconds  (2.5 * 8 = 20 words)
-    # build_director_prompt interpolates them into DIRECTOR_RULES, and
-    # validate_blueprint re-derives the same number to reject over-long text.
-    # Raising max_scene_seconds above 8 is NOT enough on its own — Veo only
-    # emits 4/6/8s clips (video_veo_client.VEO_ALLOWED_SECONDS) and
-    # scene_gen.VEO_VIDEO_SECONDS hard-codes 8s for speaking scenes.
+    # Internal pacing limits used by both prompt generation and validation.
+    # Speaking scenes are capped at:
+    #   words_per_second × max_scene_seconds (default: 2.5 × 8 = 20 words).
+    # Increasing max_scene_seconds alone is insufficient because Veo only
+    # supports 4/6/8-second clips.
     words_per_second: float = 2.5
     min_scene_seconds: float = 6.0
     max_scene_seconds: float = 8.0
-    # Requested B-Roll length. Veo's floor is 4s, so B-Roll is generated at 4s
-    # and trimmed down to this afterwards (see scene_gen.generate_scene).
-    # NOTE: for blueprint_type="opening" the OPENING B-Roll ignores this and is
-    # forced to 4s by director.enforce_opening_length, because it has to be long
-    # enough to carry the title card.
+    # Target B-Roll duration. Generated as a 4s clip (Veo minimum) then trimmed.
+    # Opening blueprints always use a full 4s B-Roll for the title card.
     broll_length_seconds: float = 1
 
     # min_scene_seconds is interpolated into the prompt as `min_words` but is
@@ -63,11 +53,10 @@ class DirectorConfig:
 
 
 class DirectorLLM(Protocol):
-    """The only thing the director needs from an LLM: one text completion.
+    """Minimal interface the director needs: one text completion.
 
-    Keeping this a Protocol is what lets validate_blueprint / direct() be
-    unit-tested against a stub that returns canned JSON — no key, no spend.
-    GeminiDirector (director.py) is the live implementation.
+    Using a Protocol lets the director be unit-tested with stub LLMs instead of
+    the live Gemini implementation.
     """
     def complete(self, system: str, user: str) -> str: ...
 

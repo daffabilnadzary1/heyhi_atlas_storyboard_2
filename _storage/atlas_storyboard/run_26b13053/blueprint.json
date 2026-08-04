@@ -1,0 +1,60 @@
+{
+  "title": "TechNova HR Policies Explained",
+  "style": "A professional realism art style for corporate training videos, ensuring consistent character appearance and wardrobe across all scenes.",
+  "style_type": "realism",
+  "character_count": 1,
+  "music_style": "Upbeat electronic instrumental with soft synth pads, motivational and modern — onboarding video mood",
+  "backgrounds": [
+    {
+      "id": "bg_modern_office",
+      "prompt": "An illustration of a bright, contemporary open-plan office. Sleek desks, ergonomic chairs, and large windows overlooking a city skyline. Illuminated by soft, natural daylight filtering through the windows, creating a calm and professional atmosphere. Smooth, minimalist surfaces with subtle textures. Wide establishing shot, NO CHARACTERS in frame. Empty environment plate. 16:9 format."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene_opening_broll",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "",
+      "prompt": "Cinematography: Wide establishing shot of a modern, bright open-plan office, with soft focus on the foreground elements. Subject: The empty, sunlit interior of a contemporary office space, featuring sleek desks and ergonomic chairs. Action: The camera slowly pans across the tranquil office, revealing the spacious environment. Context: A professional, clean office setting with large windows. Style and Ambience: Calm and inviting atmosphere, illuminated by natural daylight, wordless illustration; all surfaces smooth and blank; no signage, no writing, no text, no labels, or numerical characters visible on any object, wall, or background, Ambient noise: Gentle hum of office equipment, distant city sounds, Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "background:bg_modern_office",
+      "type": "B-Roll",
+      "broll_role": "opening",
+      "length": 4.0,
+      "aspect_ratio": "16:9",
+      "topic": null,
+      "characters": [],
+      "audios": []
+    },
+    {
+      "id": "scene_intro_1",
+      "task": "reference-to-video",
+      "model": "Veo 3.1 Fast",
+      "text": "Welcome to TechNova Solutions. This Human Resources Policy Manual is designed to provide employees with a clear understanding.",
+      "prompt": "Cinematography: Medium shot of char_narrator, framed from the waist up. Subject: char_narrator, a friendly and professional individual, standing in a modern office. Action: The character's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Do not display the storyboard grid at the start of the clip; begin animation directly from Panel 1 as depicted in the reference. Context: A contemporary office environment with a blurred background, suggesting a bustling but organized workplace. Style and Ambience: Professional and welcoming, illuminated by soft, even lighting, wordless illustration; all surfaces smooth and blank; no signage, no writing, no text, no labels, or numerical characters visible on any object, wall, or background, Ambient noise: Soft ambient office chatter, Language: english",
+      "safety": "Allow (Adult only)",
+      "reference_from": "storyboard:sb_intro",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Introduction & Purpose",
+      "characters": ["char_female_casual_realism_1"],
+      "audios": [
+        {
+          "char_id": "char_female_casual_realism_1",
+          "audio_id": "3NCpLcGW5vNnR78Ytkew"
+        }
+      ]
+    }
+  ],
+  "storyboard": [
+    {
+      "id": "sb_intro",
+      "model": "gemini-2.5-flash-image",
+      "prompt": "A 2x2 multipanel storyboard grid, showing four sequential moments from an 8-second scene as a comic strip. Panel 1 (top-left, 00:00-00:02): in the foreground, char_narrator stands confidently, gesturing welcomingly; in the background, a modern office with a large screen displaying a company logo. Panel 2 (top-right, 00:02-00:04): char_narrator turns slightly, pointing towards a digital tablet in their hand, indicating information. Panel 3 (bottom-left, 00:04-00:06): char_narrator looks directly at the camera with a reassuring expression, hands clasped loosely. Panel 4 (bottom-right, 00:06-00:08): char_narrator gestures broadly towards the office environment, emphasizing inclusivity. Character design and wardrobe identical across panels. Clean black panel borders. 16:9 format.",
+      "reference": ["char_female_casual_realism_1", "bg_modern_office"]
+    }
+  ]
+}

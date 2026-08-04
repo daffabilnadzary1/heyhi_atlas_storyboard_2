@@ -1,0 +1,13 @@
+{
+  "taskId": "f7ba4d4432e305d5c398f9853c20d4f2",
+  "model": "google/nano-banana",
+  "state": "success",
+  "param": "{\"input\":\"{\\\"output_format\\\":\\\"png\\\",\\\"image_size\\\":\\\"1:1\\\",\\\"prompt\\\":\\\"\\\\nA single torn bank statement page dominates the frame as the hero element, hand-torn from aged ledger paper, carrying the stamp-printed label NON-RECEIPT in condensed black type inside a red rubber-stamp box, pinned at a slight angle to a bare archival paper surface, one strip of masking tape at its corner and a faint coffee-ring stain nearby as the only supporting elements, wide empty margins around it. hand-cut documentary paper collage on aged newsprint and archival map surfaces, black and white halftone photograph cutouts with rough scissor-cut edges and offset accent strokes, torn paper edges, masking tape fragments, typewriter caption strips, rubber stamp marks, red string and brass pins where the story calls for connections, desaturated archival palette of tan, ink black, and halftone gray with ONE hot red signal accent and a restrained mustard yellow secondary, condensed bold headline lettering only where a label is specified, visible print grain and paper fiber, matte, flat even documentary lighting with soft cutout drop shadows. Every element must appear physically hand-cut and layered from real paper, with visible cutout edges, halftone print texture, and soft shadow separation between layers. The composition stays clean, minimal, and editorial with generous negative space. NOT digital illustration, NOT cartoon, NOT 3D render, NOT glossy, no gradients, no clutter, no watermark, no logos, no text beyond the specified label. Premium documentary collage aesthetic, 16:9, ultra-detailed, 8K.\\\"}\",\"model\":\"google/nano-banana\"}",
+  "resultJson": "{\"resultUrls\":[\"https://tempfile.aiquickdraw.com/p/f7ba4d4432e305d5c398f9853c20d4f2_1_1785240314_5865.png\"]}",
+  "failCode": null,
+  "failMsg": null,
+  "costTime": 27,
+  "completeTime": 1785240316213,
+  "createTime": 1785240288631,
+  "creditsConsumed": 4.0
+}

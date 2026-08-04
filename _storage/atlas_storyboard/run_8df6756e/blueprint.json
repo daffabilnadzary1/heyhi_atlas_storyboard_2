@@ -1,0 +1,135 @@
+{
+  "title": "年假基础与管理",
+  "style": "A modern 2D cartoon style, fun yet professional for corporate training videos, ensuring character design and wardrobe are consistent across all scenes.",
+  "style_type": "cartoon",
+  "character_count": 2,
+  "music_style": "Upbeat corporate instrumental with light synth pads and a steady, motivational rhythm, suitable for an onboarding video.",
+  "backgrounds": [
+    {
+      "id": "bg_modern_office",
+      "prompt": "An illustration of a bright, open-plan modern office with sleek desks, ergonomic chairs, and potted plants. Large windows overlook a city skyline. Illuminated by soft, natural daylight, creating a calm and productive atmosphere. Clean, minimalist textures. Wide establishing shot, NO CHARACTERS in frame. Empty environment plate. 16:9 format."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "s0",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "",
+      "prompt": "Cinematography: A wide-angle shot of a modern, clean office environment, focusing on a brightly lit, empty desk with a computer monitor displaying a generic corporate logo. Subject: The pristine office space, devoid of people. Action: The camera slowly pans across the empty desk, highlighting the organized workspace. Context: A contemporary corporate office setting. Style and Ambience: Bright and inviting, with soft ambient light, wordless illustration; all surfaces smooth and blank; no signage, no writing, no text, no labels, or numerical characters visible on any object, wall, or background. Ambient noise: Gentle hum of office electronics. Language: chinese",
+      "safety": "Allow (Adult only)",
+      "reference_from": "background:bg_modern_office",
+      "type": "B-Roll",
+      "broll_role": "opening",
+      "length": 4.0,
+      "aspect_ratio": "16:9",
+      "topic": null,
+      "characters": [],
+      "audios": []
+    },
+    {
+      "id": "s1",
+      "task": "reference-to-video",
+      "model": "Veo 3.1 Fast",
+      "text": "员工每年享有30个日历日的年假，其中包括周五和周六。",
+      "prompt": "Cinematography: A medium shot of char_employee, seated at a modern office desk, facing slightly towards the camera. Subject: char_employee, a professional adult, gesturing subtly with one hand while speaking. Action: Do not display the storyboard grid at the start of the clip; begin animation directly from Panel 1 as depicted in the reference. The char_employee's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Inside a bright, contemporary office. Style and Ambience: Professional and clear, with soft, even lighting, wordless illustration; all surfaces smooth and blank; no signage, no writing, no text, no labels, or numerical characters visible on any object, wall, or background. Ambient noise: Light office background ambience. Language: chinese",
+      "safety": "Allow (Adult only)",
+      "reference_from": "storyboard:sb_1",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Annual Leave Basics",
+      "characters": ["char_female_formal_cartoon_1"],
+      "audios": [
+        {
+          "char_id": "char_female_formal_cartoon_1",
+          "audio_id": "XfNU2rGpBa01ckF309OY"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "日历日或连续日意味着周末也计入假期，而不仅仅是工作日。",
+      "prompt": "Cinematography: Consistent with previous frame. Subject: char_employee, continuing to speak, making a clarifying hand gesture. Action: The char_employee's lips and jaw move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, no writing, no text, no labels, or numerical characters visible on any object, wall, or background. Ambient noise: Light office background ambience. Language: chinese",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:s1",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Annual Leave Basics",
+      "characters": ["char_female_formal_cartoon_1"],
+      "audios": [
+        {
+          "char_id": "char_female_formal_cartoon_1",
+          "audio_id": "XfNU2rGpBa01ckF309OY"
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "task": "image-to-video",
+      "model": "Veo 3.1 Lite",
+      "text": "",
+      "prompt": "Cinematography: The camera holds the previous frame. Subject: The char_employee holds perfectly still, frozen mid-moment, like a still photograph. Action: The camera holds; the moment freezes, settling gently. Context: Consistent with previous frame. Style and Ambience: Consistent with previous frame, wordless illustration; all surfaces smooth and blank; no signage, no writing, no text, no labels, or numerical characters visible on any object, wall, or background. Ambient noise: Fading office background ambience. Language: chinese",
+      "safety": "Allow (Adult only)",
+      "reference_from": "scene:s2",
+      "type": "B-Roll",
+      "broll_role": "closing",
+      "length": 1.0,
+      "aspect_ratio": "16:9",
+      "topic": null,
+      "characters": [],
+      "audios": []
+    },
+    {
+      "id": "s10",
+      "task": "reference-to-video",
+      "model": "Veo 3.1 Fast",
+      "text": "如果在试用期前发生紧急情况，员工应直接与直属经理讨论。",
+      "prompt": "Cinematography: A medium shot showing char_employee and char_manager engaged in a conversation at a desk. char_employee looks concerned, while char_manager listens attentively. Subject: char_employee and char_manager, professional adults, interacting. Action: Do not display the storyboard grid at the start of the clip; begin animation directly from Panel 1 as depicted in the reference. Both char_employee's and char_manager's lips and jaws move continuously as if speaking, articulating dialogue that will be overlaid separately in post-production; the visual lip-sync animation is sustained throughout the entire clip. Context: Inside a bright, contemporary office. Style and Ambience: Serious and supportive, with soft, even lighting, wordless illustration; all surfaces smooth and blank; no signage, no writing, no text, no labels, or numerical characters visible on any object, wall, or background. Ambient noise: Low murmur of office activity. Language: chinese",
+      "safety": "Allow (Adult only)",
+      "reference_from": "storyboard:sb_4",
+      "type": "video-with-audio",
+      "broll_role": null,
+      "length": null,
+      "aspect_ratio": "16:9",
+      "topic": "Emergency Leave During Probation",
+      "characters": [
+        "char_female_formal_cartoon_1",
+        "char_male_formal_cartoon_1"
+      ],
+      "audios": [
+        {
+          "char_id": "char_female_formal_cartoon_1",
+          "audio_id": "XfNU2rGpBa01ckF309OY"
+        },
+        {
+          "char_id": "char_male_formal_cartoon_1",
+          "audio_id": "v6KgbPaQh6lAmMpmmtcH"
+        }
+      ]
+    }
+  ],
+  "storyboard": [
+    {
+      "id": "sb_1",
+      "model": "gemini-2.5-flash-image",
+      "prompt": "A 2x2 multipanel storyboard grid, showing four sequential moments from an 8-second scene as a comic strip. Panel 1 (top-left, 00:00-00:02): in the foreground, char_employee seated at a desk, looking at a calendar with a thoughtful expression; in the background, a modern office. Panel 2 (top-right, 00:02-00:04): char_employee points to a date on the calendar, explaining something. Panel 3 (bottom-left, 00:04-00:06): char_employee gestures with an open hand, emphasizing a point. Panel 4 (bottom-right, 00:06-00:08): char_employee nods confidently, having finished explaining. Character design and wardrobe identical across panels. Clean black panel borders. 16:9 format.",
+      "reference": ["char_female_formal_cartoon_1", "bg_modern_office"]
+    },
+    {
+      "id": "sb_4",
+      "model": "gemini-2.5-flash-image",
+      "prompt": "A 2x2 multipanel storyboard grid, showing four sequential moments from an 8-second scene as a comic strip. Panel 1 (top-left, 00:00-00:02): in the foreground, char_employee looking concerned while speaking to char_manager across a desk; in the background, a modern office. Panel 2 (top-right, 00:02-00:04): char_manager listens attentively, nodding slightly, with a supportive expression. Panel 3 (bottom-left, 00:04-00:06): char_manager offers a reassuring gesture, while char_employee shows a slight relief. Panel 4 (bottom-right, 00:06-00:08): both char_employee and char_manager conclude their discussion with a shared understanding. Character design and wardrobe identical across panels. Clean black panel borders. 16:9 format.",
+      "reference": [
+        "char_female_formal_cartoon_1",
+        "char_male_formal_cartoon_1",
+        "bg_modern_office"
+      ]
+    }
+  ]
+}

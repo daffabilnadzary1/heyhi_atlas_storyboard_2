@@ -1,0 +1,7 @@
+1
+00:00:04,000 --> 00:00:06,000
+Welcome to TechNova Solutions.
+
+2
+00:00:06,800 --> 00:00:11,300
+This manual provides employees with a clear understanding of our company's expectations.

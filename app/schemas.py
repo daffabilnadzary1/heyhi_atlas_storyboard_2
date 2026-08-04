@@ -1,28 +1,19 @@
 """
-app/schemas.py — Layer 1 (Source + Config) I/O schemas.
+app/schemas.py — Layer 1 request and blueprint schemas.
 
-ConfigIn is the user-facing config subset (language/audience/depth/style/
-objective + aspect_ratio). characters/audios are NOT here — they are chosen
-later in Layer 3 (/pipeline/select) after blueprint approval. ConfigIn maps
-1:1 onto director.DirectorConfig at direct() time.
+This file defines both pipeline contracts:
 
-This file holds BOTH halves of the contract, which is worth knowing when you
-change something:
+  • Blueprint models (VideoBlueprint, Scene, Storyboard, ...) describe
+    blueprint.json, the artifact shared by every layer after the director.
+    Changing them changes both what the director may emit and what existing
+    blueprints validate against.
 
-  * The blueprint models (BackgroundRef, Storyboard, Scene, VideoBlueprint) —
-    "schema v3". These describe blueprint.json, i.e. the artifact every layer
-    from L3 onwards reads. Editing one of these changes what the director is
-    allowed to emit AND what already-written blueprints on disk validate
-    against; old runs in _storage are NOT migrated.
-  * The HTTP request/response models (ConfigIn/Out, DirectIn/Out, ...) — the
-    API surface main.py exposes. Purely per-request, safe to change freely.
+  • Request/response models (ConfigIn, DirectIn, ...) define the HTTP API
+    exposed by main.py and are independent of stored blueprints.
 
-The pydantic models only check SHAPE. Every cross-field rule that actually
-matters (character_count matches the scenes, reference_from points at something
-real, B-Roll carries no characters, word budget) lives in
-director.validate_blueprint, and the resolved-blueprint subset is re-checked in
-patch_blueprint._check_resolved. A blueprint can satisfy this file and still be
-rejected there.
+Pydantic validates structure only. Cross-field rules (character counts,
+references, B-Roll constraints, word budgets, etc.) are enforced separately by
+director.validate_blueprint and patch_blueprint._check_resolved.
 """
 from __future__ import annotations
 
@@ -64,12 +55,10 @@ class Storyboard(BaseModel):
     )
 
 class AudioMapping(BaseModel):
-    """One character's voice for one scene.
+    """Voice assignment for one character in one scene.
 
-    The same char_id must carry the same audio_id in EVERY scene it appears in —
-    otherwise a character's voice changes mid-video. That invariant is checked
-    twice: on the director's output (validate_blueprint) and again after the
-    user's selection is applied (patch_blueprint._check_resolved).
+    A character must keep the same audio_id throughout the video. This invariant is
+    validated before and after placeholder resolution.
     """
     char_id: str = Field(..., description="placeholder char_id from scene.characters")
     audio_id: str = Field(
@@ -87,9 +76,8 @@ class VoiceEntry(BaseModel):
 
 
 # ---------------------------------------------------------------- vocabularies
-# These Literals are the pipeline's closed vocabularies. Adding a value here is
-# never enough on its own — each one has downstream code keyed on it. The
-# comments below name what else has to change.
+# Pipeline vocabularies. Adding a value usually requires matching downstream
+# logic—not just updating the Literal.
 
 SceneType = Literal["B-Roll", "video-with-audio"]
 
@@ -98,38 +86,30 @@ BRollRole = Literal["opening", "closing"]
 
 Depth = Literal["standard", "deep dive"]
 
-# style_type is DERIVED, not user-supplied: director.derive_style_type keyword-
-# matches the free-text `style` string into one of these. Its only consumer today
-# is renderer.title_style_for (cartoon gets a different title treatment).
+# Derived from the free-text style string. Used by the renderer for
+# style-specific presentation.
 StyleType = Literal["realism", "cartoon", "semi-realism"]
 
 # Add objective literal (popular use cases)
 AspectRatio = Literal["16:9", "9:16"]
 
-# task and model are not independent — the reference_from prefix determines both
-# (director.ROUTE_BY_PREFIX). storyboard: -> reference-to-video + Fast;
-# background:/scene: -> image-to-video + Lite. scene_gen.route() re-checks the
-# pairing at generation time, right before the billable call.
+# reference_from determines both task and model. scene_gen re-validates the
+# pairing before generation.
 VeoTask = Literal["image-to-video", "reference-to-video"]
 VeoModel = Literal["Veo 3.1 Fast", "Veo 3.1 Lite"]
 
-# Selects the blueprint SHAPE rules, read from config.json by
-# director.read_blueprint_type. Today the only behavioural difference is the
-# opening section: "opening" forces the first B-Roll to 4s and burns the title
-# card over it; "summary" keeps the director's short plate with no title.
+# Selects blueprint behavior. Currently only "opening" and "summary" are
+# implemented.
 # TODO: change3_short_animation.md specs a third value, "illustration", with its
 # own director. It is NOT implemented — adding it here would let it through
 # validation and then fail further down.
 BlueprintType = Literal["opening", "summary"]
 
 class Scene(BaseModel):
-    """One Veo clip. The scenes list IS the video timeline — they are concatenated
-    in list order with no cuts (renderer.merge_scenes).
+    """One Veo clip.
 
-    `id` doubles as a filename in three places, so it must be filesystem-safe:
-        veo_raw/<id>.mp4     pristine Veo output
-        scenes/<id>.mp4      after L6 trims + muxes the voice track
-        tts/<id>_*.wav       the voice clips and the timings sidecar
+    The scenes list defines the final video timeline. Scene IDs must be filesystem-
+    safe because they are reused as output filenames.
     """
     id: str = Field(..., description="short unique scene id, e.g. 's1'")
     task: VeoTask = Field(
@@ -147,10 +127,8 @@ class Scene(BaseModel):
             "pairs with image-to-video."
         ),
     )
-    # "in config.language" is load-bearing, not decoration. With use_schema on,
-    # these descriptions travel to Gemini as JSON-schema annotations, and on
-    # run_77d71eba the only field that came back in the requested language was
-    # `title` — the only one whose description named the language. See
+    # Mentioning config.language here is intentional: response_schema passes Field
+    # descriptions to Gemini, and explicitly naming the language improves adherence.See
     # docs/open-questions.md #28.
     text: str = Field(
         "",
@@ -219,9 +197,6 @@ class VideoBlueprint(BaseModel):
          rewrites blueprint.json with the user's real library ids.
     Everything downstream reads the resolved version.
 
-    Note there is no `keyframe` field. Older blueprints in _storage still carry
-    one; it was removed from the schema and pydantic drops unknown keys on the
-    way in, so any `keyframe` you see on disk is legacy and unread.
     """
     title: str = Field(..., min_length=1, max_length=80,
                        description="short on-screen video title, in config.language")
@@ -256,21 +231,8 @@ class ConfigIn(BaseModel):
     style: str = Field(..., min_length=1)
     objective: str = Field(..., min_length=1)
 
-    # LOCKED TO 16:9 (decision 2026-08-01). The type is Literal["16:9"] here, not
-    # AspectRatio, so a request asking for "9:16" is a 422 rather than a run that
-    # silently produces something broken.
-    #
-    # Why locked: portrait does not work end to end today. main._image_client()
-    # builds GeminiImageClient with its default 16:9 and never reads this field,
-    # so a 9:16 run generates LANDSCAPE backgrounds and storyboards and then asks
-    # Veo for portrait video. On top of that, all five bundled transition overlays
-    # are 1920x1080 and apply_transitions scales them to the video geometry
-    # without honouring TransitionEntry.aspect_ratio, so they would stretch.
-    #
-    # The lock is deliberately ONLY here. Scene.aspect_ratio, the AspectRatio
-    # literal, the DIRECTOR_RULES interpolation and the Veo plumbing all still
-    # carry both values, so unlocking is this line plus passing the config
-    # through in _image_client — not a re-implementation. See
+    # Locked to 16:9. Portrait is not supported end-to-end yet, so accepting 9:16
+    # would produce inconsistent assets. See
     # docs/open-questions.md #13.
     aspect_ratio: Literal["16:9"] = "16:9"
 
@@ -290,10 +252,9 @@ class DirectIn(BaseModel):
     run_id: str
     force: bool = False                               # overwrite an existing blueprint, for regeneration purposes
     max_retries: int = Field(2, ge=0, le=5)
-    # Hand VideoBlueprint to Gemini as a response_schema so the reply cannot be
-    # malformed JSON or carry an out-of-vocabulary enum. ON by default since
-    # 2026-08-02. It does NOT remove retries caused by validate_blueprint's
-    # semantic rules — those are the common ones. See docs/open-questions.md #25.
+    # Pass VideoBlueprint as Gemini's response_schema to guarantee valid JSON and
+    # enum values. Semantic validation still happens afterward.
+    # See docs/open-questions.md #25.
     use_schema: bool = True
  
 class DirectOut(BaseModel):
@@ -324,20 +285,13 @@ class SelectOut(BaseModel):
     blueprint_path: str
     count: int
 
-# --- force vs resume ---------------------------------------------------------
-# Every billable stage carries both flags, and they mean opposite things:
+# Billable stages support two mutually exclusive modes:
 #
-#   force=True    throw away what is on disk and generate all of it again. Use
-#                 after editing the blueprint — resume cannot see that a prompt
-#                 changed, only that a file exists.
-#   resume=True   keep every artifact already on disk and generate only what is
-#                 missing. This is the recovery path for a stage that died part
-#                 way through, and it is the one that saves money.
+#   force  -> regenerate everything
+#   resume -> generate only missing artifacts
 #
-# Neither flag set keeps the original behaviour: a 409 if the stage already has
-# output, so nothing billable can be re-run by accident. Setting BOTH is a 422 —
-# they contradict each other and guessing which one the caller meant is exactly
-# the kind of guess that spends someone's credits.
+# Neither flag returns 409 if output already exists, preventing accidental
+# reruns.
 class AssetsIn(BaseModel):
     model_config = ConfigDict(extra="forbid")
     run_id: str
@@ -359,10 +313,8 @@ class ScenesIn(BaseModel):
     tts_only: bool = False        # reuse veo_raw/ clips; re-run L6 only (no Veo)
     tts_provider: Literal["azure", "elevenlabs"] = "elevenlabs"
     video_provider: Literal["gemini", "kieai"] = "gemini"   # kieai = testing-only
-    # Word-level timing for subtitles (both audio paths) and for placing audio
-    # (Azure only). "gemini" is one billed call per speaking scene; "whisper" runs
-    # faster-whisper locally for nothing, but needs the optional dependency
-    # installed and downloads a model on first use. See docs/open-questions.md #16.
+    # Provides word timings for subtitles. Gemini is billed per scene; Whisper runs
+    # locally but requires the optional dependency. See docs/open-questions.md #16.
     diarizer: Literal["gemini", "whisper"] = "gemini"
 
 class ScenesOut(BaseModel):
@@ -390,11 +342,8 @@ class MusicOut(BaseModel):
 class RenderIn(BaseModel):
     run_id: str
     force: bool = False   # overwrite an existing final.mp4
-    # How the captions get burned in. "boxed" is the current default (PNG
-    # overlays, rounded corners, one ffmpeg input per cue). "ass" draws the same
-    # box as vector shapes in a single subtitle file — flat cost however many
-    # cues, needs libass. ON TRIAL: render is free and re-runnable, so run both
-    # on the same run_id and compare before changing the default.
+   # Subtitle renderer. "boxed" is the default PNG-overlay implementation. "ass"
+    # requires libass and renders from a single subtitle file.
     # See docs/open-questions.md #23.
     subtitle_method: Literal["boxed", "ass", "libass", "drawtext", "auto"] = "boxed"
  

@@ -1,0 +1,19 @@
+1
+00:00:04,000 --> 00:00:05,900
+Welcome to TechNova Solutions.
+
+2
+00:00:06,600 --> 00:00:11,900
+This Human Resources Policy Manual is designed to provide employees with a clear understanding.
+
+3
+00:00:12,587 --> 00:00:14,987
+It covers our company's expectations
+
+4
+00:00:14,987 --> 00:00:16,587
+workplace standards
+
+5
+00:00:16,587 --> 00:00:19,287
+and the benefits available to our team members.

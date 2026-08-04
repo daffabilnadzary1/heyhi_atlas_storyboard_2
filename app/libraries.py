@@ -1,21 +1,22 @@
 """
-app/libraries.py — Layer 3 library indexes (characters + audio).
+app/libraries.py — Layer 3 asset libraries (characters and audio).
 
-Two on-disk libraries, each = a folder of assets + an index.json:
+Each library is a folder of assets plus an index.json:
 
-  _storage/character_library/   *.png  + index.json
-  _storage/audio_library/       *.wav  + index.json
+  _storage/character_library/   *.png + index.json
+  _storage/audio_library/       *.wav + index.json
 
-These index schemas are the READ contract for the L3 API (D2T4:
-GET /pipeline/characters, GET /pipeline/audios) and the selection
-validator (D2T5). image_path / sample_path are stored RELATIVE to the
-library root, so the tree can move (local -> S3) without rewrites.
+The indexes are the source of truth for the L3 API (D2T4) and selection
+validation (D2T5). Asset paths are stored relative to the library root so the
+library can be relocated without rewriting metadata.
 
 CLI:
-  # D2T1 — scan PNGs, scaffold/merge index.json, validate
   python -m app.libraries characters --root _storage/character_library
-  # D2T3 — validate the authored audio index.json (--strict-files to require wavs)
+      Scan PNGs, merge/scaffold index.json, then validate.
+
   python -m app.libraries audios --root _storage/audio_library
+      Validate (or scaffold) the audio index. Use --strict-files to require
+      every sample wav.
 """
 from __future__ import annotations
 
@@ -71,8 +72,11 @@ def _write_index(root: Path, entries) -> None:
 def build_character_index(
     root: Path, exts: tuple[str, ...] = (".png",)
 ) -> tuple[list[CharacterEntry], list[str]]:
-    """Scan the library folder, scaffold entries, MERGE over any existing
-    index.json (never clobbers human-authored description/tags). Idempotent."""
+    """Scan character images and rebuild index.json.
+
+    Existing descriptions and tags are preserved, so rebuilding never overwrites
+    human-authored metadata. Missing image files are reported as warnings.
+    """
     root = root.resolve()
     prior: dict[str, CharacterEntry] = {} # Load the previous metadata JSON, so when we rebuild, we don't lose it
     if (root / "index.json").exists():
@@ -102,12 +106,14 @@ def build_character_index(
 def build_audio_index(
     root: Path, exts: tuple[str, ...] = (".wav",)
 ) -> tuple[list[AudioEntry], list[str]]:
-    """UNION merge, keyed by sample filename. Unlike characters, audio
-    metadata (voice_name/language) is NOT derivable from the file, so:
-      * authored entries are kept even if their wav isn't generated yet
-        (warned) — this is why we never scan-and-replace,
-      * wavs with no metadata get a stub (audio_id = stem) to fill in.
-    Idempotent; safe before and after sample generation."""
+    """Merge authored metadata with wav files on disk.
+
+    Unlike characters, audio metadata cannot be inferred from the sample, so:
+    • authored entries are kept even if the wav is missing (warning),
+    • new wavs receive stub metadata for later completion.
+
+    Safe to run before or after sample generation.
+    """
     root = root.resolve()
     prior: dict[str, AudioEntry] = {}
     if (root / "index.json").exists():

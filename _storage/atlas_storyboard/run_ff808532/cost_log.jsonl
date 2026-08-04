@@ -1,0 +1,3 @@
+{"scene_id": "scene_001", "model": "Veo 3.1 Lite", "task": "image-to-video", "attempts": 1, "status": "ok", "credits_before": 8110.0, "credits_after": 8080.0, "credits_used": 30.0}
+{"scene_id": "scene_002", "model": "Veo 3.1 Fast", "task": "reference-to-video", "attempts": 1, "status": "ok", "credits_before": 8080.0, "credits_after": 8020.0, "credits_used": 60.0}
+{"scene_id": "scene_003", "model": "Veo 3.1 Lite", "task": "image-to-video", "attempts": 1, "status": "ok", "credits_before": 8020.0, "credits_after": 7990.0, "credits_used": 30.0}

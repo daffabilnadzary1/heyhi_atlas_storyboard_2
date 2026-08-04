@@ -1,31 +1,24 @@
 """
-app/costs.py — the one place spend is priced and recorded.
+app/costs.py — central pricing and cost logging.
 
-WHY THIS EXISTS. Cost used to be Veo-only: video_veo_client held a
-COST_PER_SECOND table and appended to cost_log.jsonl, and /pipeline/scenes
-summed that file and returned it as `total_cost_usd`. It was never a total —
-images, TTS, speech-to-speech, diarization, the director's own retries and Lyria
-were all invisible.
+Every provider records spend here. Older versions only tracked Veo video costs,
+so images, TTS, STS, diarization, director retries, and music were invisible.
 
-THE SHAPE OF THE PROBLEM. Providers bill in different units: per token, per
-second of generated video, per second of synthesised audio, per image, per call,
-per credit. So a record cannot just be a dollar figure — it stores the UNIT and
-the QUANTITY that were actually measured, and the price is derived:
+Providers bill in different units (tokens, seconds, images, calls, credits),
+so each record stores the measured quantity and unit, with cost derived from the
+pricing table:
 
     {"layer": "L5", "provider": "gemini", "model": "Veo 3.1 Fast",
-     "unit": "second", "quantity": 8.0, "cost_usd": 0.8, "measured": true}
+     "unit": "second", "quantity": 8.0,
+     "cost_usd": 0.8, "measured": true}
 
-`measured` distinguishes a quantity read from the real artifact (the length of
-the mp4 on disk, the credits the provider actually deducted) from one inferred
-from what we asked for. Only measured numbers are trustworthy when reconciling
-against an invoice.
+`measured` marks quantities taken from the real artifact or provider (mp4
+duration, deducted credits, etc.) rather than inferred from the request.
 
-PRICING IS DATA, not logic. PRICING below is transcribed from cost.md. Rates
-move; update the table and the date, not the code.
+Pricing is data, not logic: update PRICING (from cost.md), not the code.
 
-APPEND-ONLY JSONL, deliberately. A single JSON document would need
-read-modify-write and would lose the whole run's history if the process died
-mid-generation — which is exactly when the cost record matters most.
+Costs are stored as append-only JSONL so each event survives crashes without
+requiring read-modify-write.
 """
 from __future__ import annotations
 
@@ -35,9 +28,8 @@ from pathlib import Path
 
 COST_LOG = "cost_log.jsonl"
 
-# Rates last checked 2026-08-01. Source: cost.md.
-# Every entry is (unit, usd_per_unit). Keep the unit strings in sync with the
-# `unit` field written by the recorders below.
+# Rates last checked 2026-08-01 (cost.md).
+# Each entry maps billable units to (unit_name, usd_per_unit).
 PRICING: dict[str, dict[str, tuple[str, float]]] = {
     # --- L2 director + L6 diarization: token-billed -------------------------
     "gemini-2.5-flash": {
@@ -45,11 +37,8 @@ PRICING: dict[str, dict[str, tuple[str, float]]] = {
         "token_out": ("token_out", 2.50 / 1_000_000),
     },
     # --- L4 images ---------------------------------------------------------
-    # Billed per output image. Token counts ARE recorded when the SDK reports
-    # them, but are not priced: applying the text model's $2.50/1M output rate
-    # to an image's ~1290 tokens gives ~$0.003, an order of magnitude below the
-    # observed ~$0.039 per image, so the text rates clearly do not apply to
-    # image output. Priced per image until that is resolved. See cost.md.
+    # Gemini Image is billed per image. Token counts are recorded for visibility
+    # but not priced because image pricing does not follow text-token rates.
     "gemini-2.5-flash-image": {
         "image": ("image", 0.039),
     },
@@ -57,8 +46,7 @@ PRICING: dict[str, dict[str, tuple[str, float]]] = {
     "Veo 3.1 Fast": {"second": ("second", 0.10)},
     "Veo 3.1 Lite": {"second": ("second", 0.05)},
     # --- L5 video (kie.ai) -------------------------------------------------
-    # kie bills credits, and scene_gen reads the balance before/after each call,
-    # so the quantity here is always MEASURED rather than estimated.
+    # kie bills in credits. Scene generation measures credits consumed directly.
     "kie.ai": {"credit": ("credit", 0.005)},
     # --- L6 audio ----------------------------------------------------------
     # Azure: per second of SYNTHESISED audio — measured before silence trimming,
@@ -76,13 +64,15 @@ PRICING_LAST_CHECKED = "2026-08-01"
 
 
 class UnknownRate(KeyError):
-    """No rate for this (model, unit). Raised only by price(); the recorders
-    swallow it so a pricing gap can never lose an artifact we already paid
-    for — the record is still written, with cost_usd = None."""
+    """No rate for (model, unit).
+
+    Raised only by price(). Recorders catch it and still log the usage with
+    cost_usd=None so the run can be repriced later.
+    """
 
 
 def price(model: str, unit: str, quantity: float) -> float:
-    """usd for `quantity` of `unit` on `model`. Raises UnknownRate if untabulated."""
+    """Return the USD cost for a quantity of a model/unit pair."""    
     table = PRICING.get(model)
     if table is None or unit not in table:
         raise UnknownRate(f"no rate for model={model!r} unit={unit!r}")
@@ -93,14 +83,12 @@ def price(model: str, unit: str, quantity: float) -> float:
 def record(run_dir: str | Path, *, layer: str, provider: str, model: str,
            unit: str, quantity: float, measured: bool = False,
            **extra) -> dict:
-    """Price one usage event and append it to run_0X/cost_log.jsonl.
+    """Append one priced usage event to cost_log.jsonl.
 
-    Returns the record (handy in tests). Never raises on an unpriced model —
-    cost_usd is left None and the quantity is still on record, so the run can be
-    re-priced later once the rate is known.
+    Returns the written record. Unknown pricing never aborts generation—the event is
+    still recorded with cost_usd=None for later repricing.
 
-    `extra` carries whatever identifies the event for debugging: scene_id,
-    attempts, phrase index. It is written verbatim.
+    `extra` is written verbatim (scene_id, attempt, phrase index, etc.).
     """
     try:
         usd = price(model, unit, quantity)
@@ -118,11 +106,9 @@ def record(run_dir: str | Path, *, layer: str, provider: str, model: str,
 
 def record_tokens(run_dir: str | Path, *, layer: str, model: str,
                   usage: dict | None, **extra) -> None:
-    """Two records (in + out) for a token-billed call.
+    """Record input and output token usage for one Gemini call.
 
-    `usage` is the shape produced by usage_from_response(). None or a missing
-    count means the SDK did not report it — nothing is written rather than a
-    zero, so an absent number never masquerades as a free call.
+    Missing token counts are ignored rather than recorded as zero.
     """
     if not usage:
         return
@@ -134,11 +120,10 @@ def record_tokens(run_dir: str | Path, *, layer: str, model: str,
 
 
 def usage_from_response(resp) -> dict:
-    """Pull token counts off a google-genai response.
+    """Extract token counts from a google-genai response.
 
-    Defensive by design: this is the most version-sensitive surface in the SDK,
-    and losing a token count must never break generation. An unrecognised shape
-    yields {} and the caller simply records no tokens.
+    SDK response shapes vary across versions. Unknown layouts return {}, allowing
+    generation to continue without token accounting.
     """
     meta = getattr(resp, "usage_metadata", None)
     if meta is None:
@@ -158,7 +143,10 @@ def usage_from_response(resp) -> dict:
 
 # ---------------------------------------------------------------- reporting
 def load(run_dir: str | Path) -> list[dict]:
-    """Every cost record for a run, oldest first. Missing log -> []."""
+    """Load all cost records for a run.
+
+    Returns [] if the log is missing. Invalid final lines are ignored.
+    """    
     p = Path(run_dir) / COST_LOG
     if not p.is_file():
         return []
@@ -175,11 +163,10 @@ def load(run_dir: str | Path) -> list[dict]:
 
 
 def summarize(run_dir: str | Path) -> dict:
-    """Totals for a run: overall, per layer, per model, plus what could not be
-    priced.
+    """"Summarize spend by total, layer, and model.
 
-    `unpriced` is the honesty check — a non-empty list means `total_usd` is an
-    undercount, not a total.
+    `unpriced` lists usage that could not be costed. If non-empty, `total_usd` is an
+    undercount rather than the true total.
     """
     records = load(run_dir)
     total = 0.0

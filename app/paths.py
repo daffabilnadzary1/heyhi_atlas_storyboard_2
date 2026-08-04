@@ -1,22 +1,12 @@
 """
-app/paths.py — where things live on disk.
+app/paths.py — code-adjacent asset paths.
 
-Two kinds of path in this project, and they must be resolved differently:
+This file resolves assets that ship with the repository (fonts, transitions)
+relative to __file__, so they work regardless of the current working directory.
 
-  CODE-ADJACENT ASSETS (this file)
-    Fonts, transition overlays. They ship with the repo, are versioned alongside
-    the source, and never move relative to it. Resolved from __file__, so they
-    work from any working directory — under a process manager, in a container,
-    from a cron job, from pytest.
-
-  RUN DATA (main.py: STORAGE_ROOT, CHAR_LIB_ROOT, AUDIO_LIB_ROOT)
-    Generated runs and the character/audio libraries. Mutable,
-    deployment-specific, and deliberately NOT inside the repo. Those stay
-    relative-to-cwd with an environment override, which is correct for data.
-
-Before this existed both kinds resolved against the working directory, so
-starting the server from anywhere but the repo root silently dropped transitions
-and hard-failed cartoon titles.
+Do not use this for mutable run data (generated runs, character/audio
+libraries). Those are deployment-specific and are resolved separately from the
+working directory or environment variables.
 """
 from __future__ import annotations
 

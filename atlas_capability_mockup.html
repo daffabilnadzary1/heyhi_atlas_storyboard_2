@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas — Capability Report (mock-up)</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-0: #f4f4f2;
+    --surface-1: #fcfcfb;
+    --border:    #e2e1dd;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #86857f;
+    --series-1: #2a78d6;  /* Month 1 — baseline */
+    --series-2: #eb6834;  /* Month 3 — after training */
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 32px 24px 64px;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 840px; margin: 0 auto; }
+
+  .mock-note {
+    font-size: 12px; color: var(--text-muted); text-align: center;
+    margin: 0 0 20px; letter-spacing: .02em;
+  }
+
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+
+  .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-muted); margin: 0 0 6px;
+  }
+  h1 { font-size: 22px; font-weight: 650; margin: 0 0 4px; letter-spacing: -.01em; }
+  h2 { font-size: 16px; font-weight: 650; margin: 0 0 2px; }
+  .sub { font-size: 13px; color: var(--text-secondary); margin: 0; }
+
+  .rule { height: 1px; background: var(--border); border: 0; margin: 24px 0; }
+
+  /* ---- legend ---- */
+  .legend { display: flex; gap: 20px; align-items: center; margin: 0 0 22px; font-size: 13px; color: var(--text-secondary); }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 0 2px var(--surface-1); }
+  .dot.m1 { background: var(--series-1); }
+  .dot.m3 { background: var(--series-2); }
+
+  /* ---- dumbbell chart ---- */
+  .chart { display: grid; grid-template-columns: 190px 1fr; gap: 6px 16px; align-items: center; }
+
+  .dim-label { font-size: 13.5px; color: var(--text-primary); text-align: right; }
+
+  .track { position: relative; height: 34px; }
+  .gridline {
+    position: absolute; top: 0; bottom: 0; width: 1px; background: var(--border);
+  }
+  .connector {
+    position: absolute; top: 50%; height: 2px; transform: translateY(-50%);
+    background: linear-gradient(90deg, var(--series-1), var(--series-2));
+    border-radius: 1px;
+  }
+  .pt {
+    position: absolute; top: 50%; width: 11px; height: 11px; border-radius: 50%;
+    transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--surface-1);
+  }
+  .pt.m1 { background: var(--series-1); }
+  .pt.m3 { background: var(--series-2); }
+  .val {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    font-size: 12px; font-variant-numeric: tabular-nums; color: var(--text-secondary);
+  }
+  .val.right { color: var(--text-primary); font-weight: 600; }
+
+  .axis { grid-column: 2; position: relative; height: 20px; font-size: 11px; color: var(--text-muted); }
+  .axis span { position: absolute; transform: translateX(-50%); }
+
+  /* ---- transcript ---- */
+  .excerpts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .excerpt {
+    border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+    background: var(--surface-1);
+  }
+  .excerpt .tag {
+    font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 7px; color: var(--text-secondary);
+  }
+  .excerpt p { margin: 0 0 8px; font-size: 13.5px; }
+  .excerpt p:last-child { margin-bottom: 0; }
+  .who { color: var(--text-muted); font-size: 12px; }
+  .said { color: var(--text-primary); }
+
+  /* ---- cohort ---- */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 4px; }
+  .stat .n { font-size: 30px; font-weight: 650; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat .k { font-size: 12.5px; color: var(--text-secondary); }
+
+  .privacy {
+    font-size: 12.5px; color: var(--text-secondary);
+    border-left: 3px solid var(--series-1); padding: 2px 0 2px 14px; margin-top: 22px;
+  }
+
+  table { border-collapse: collapse; width: 100%; font-size: 13px; margin-top: 4px; }
+  th, td { text-align: left; padding: 7px 10px 7px 0; border-bottom: 1px solid var(--border); }
+  th { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+  td.num { font-variant-numeric: tabular-nums; text-align: right; padding-right: 24px; }
+
+  @media (max-width: 680px) {
+    .chart { grid-template-columns: 1fr; }
+    .dim-label { text-align: left; margin-top: 10px; }
+    .axis { grid-column: 1; }
+    .excerpts, .stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="mock-note">MOCK-UP — illustrative data, not a real learner</p>
+
+  <!-- ============ INDIVIDUAL VIEW ============ -->
+  <div class="card">
+    <p class="eyebrow">Capability report · visible to the learner only</p>
+    <h1>Negotiation — Month 1 vs Month 3</h1>
+    <p class="sub">Two scenario roleplays of matched difficulty, scored against the same rubric.</p>
+
+    <hr class="rule">
+
+    <div class="legend">
+      <span><i class="dot m1"></i> Month 1 — baseline</span>
+      <span><i class="dot m3"></i> Month 3 — after training</span>
+    </div>
+
+    <!-- scale: 1..5 mapped to 4%..96% of track width -->
+    <div class="chart">
+
+      <div class="dim-label">Objection handling</div>
+      <div class="track">
+        <div class="gridline" style="left:4%"></div><div class="gridline" style="left:27%"></div>
+        <div class="gridline" style="left:50%"></div><div class="gridline" style="left:73%"></div>
+        <div class="gridline" style="left:96%"></div>
+        <div class="connector" style="left:27%; width:46%"></div>
+        <div class="pt m1" style="left:27%"></div>
+        <div class="pt m3" style="left:73%"></div>
+        <div class="val" style="left:calc(27% - 26px)">2</div>
+        <div class="val right" style="left:calc(73% + 16px)">4</div>
+      </div>
+
+      <div class="dim-label">Value framing</div>
+      <div class="track">
+        <div class="gridline" style="left:4%"></div><div class="gridline" style="left:27%"></div>
+        <div class="gridline" style="left:50%"></div><div class="gridline" style="left:73%"></div>
+        <div class="gridline" style="left:96%"></div>
+        <div class="connector" style="left:27%; width:23%"></div>
+        <div class="pt m1" style="left:27%"></div>
+        <div class="pt m3" style="left:50%"></div>
+        <div class="val" style="left:calc(27% - 26px)">2</div>
+        <div class="val right" style="left:calc(50% + 16px)">3</div>
+      </div>
+
+      <div class="dim-label">Concession discipline</div>
+      <div class="track">
+        <div class="gridline" style="left:4%"></div><div class="gridline" style="left:27%"></div>
+        <div class="gridline" style="left:50%"></div><div class="gridline" style="left:73%"></div>
+        <div class="gridline" style="left:96%"></div>
+        <div class="connector" style="left:4%; width:46%"></div>
+        <div class="pt m1" style="left:4%"></div>
+        <div class="pt m3" style="left:50%"></div>
+        <div class="val" style="left:calc(4% - 14px)">1</div>
+        <div class="val right" style="left:calc(50% + 16px)">3</div>
+      </div>
+
+      <div class="dim-label">Uncovering interests</div>
+      <div class="track">
+        <div class="gridline" style="left:4%"></div><div class="gridline" style="left:27%"></div>
+        <div class="gridline" style="left:50%"></div><div class="gridline" style="left:73%"></div>
+        <div class="gridline" style="left:96%"></div>
+        <div class="connector" style="left:27%; width:46%"></div>
+        <div class="pt m1" style="left:27%"></div>
+        <div class="pt m3" style="left:73%"></div>
+        <div class="val" style="left:calc(27% - 26px)">2</div>
+        <div class="val right" style="left:calc(73% + 16px)">4</div>
+      </div>
+
+      <div class="dim-label">Assertiveness</div>
+      <div class="track">
+        <div class="gridline" style="left:4%"></div><div class="gridline" style="left:27%"></div>
+        <div class="gridline" style="left:50%"></div><div class="gridline" style="left:73%"></div>
+        <div class="gridline" style="left:96%"></div>
+        <div class="connector" style="left:50%; width:23%"></div>
+        <div class="pt m1" style="left:50%"></div>
+        <div class="pt m3" style="left:73%"></div>
+        <div class="val" style="left:calc(50% - 26px)">3</div>
+        <div class="val right" style="left:calc(73% + 16px)">4</div>
+      </div>
+
+      <div class="axis">
+        <span style="left:4%">1</span><span style="left:27%">2</span><span style="left:50%">3</span>
+        <span style="left:73%">4</span><span style="left:96%">5</span>
+      </div>
+    </div>
+
+    <hr class="rule">
+
+    <h2>What changed, in their own words</h2>
+    <p class="sub" style="margin-bottom:16px;">The counterpart pushed back on price in both sessions.</p>
+
+    <div class="excerpts">
+      <div class="excerpt">
+        <div class="tag"><i class="dot m1"></i> Month 1 · scored 2</div>
+        <p class="who">Buyer: “Your price is well above what we budgeted.”</p>
+        <p class="said">“Okay — I can probably do 15% off if that helps.”</p>
+      </div>
+      <div class="excerpt">
+        <div class="tag"><i class="dot m3"></i> Month 3 · scored 4</div>
+        <p class="who">Buyer: “Your price is well above what we budgeted.”</p>
+        <p class="said">“Before we get to price — what’s driving the timeline on your side? If this has to land before Q3, that changes what’s worth trading.”</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BUSINESS VIEW ============ -->
+  <div class="card">
+    <p class="eyebrow">Business dashboard · aggregate only</p>
+    <h1>Negotiation track — Sales, Q1 cohort</h1>
+    <p class="sub">42 participants · baseline Jan · re-measured Apr</p>
+
+    <hr class="rule">
+
+    <div class="stats">
+      <div class="stat">
+        <div class="n">2.3 &rarr; 3.6</div>
+        <div class="k">Average rubric score across all dimensions</div>
+      </div>
+      <div class="stat">
+        <div class="n">31<span style="font-size:18px; color:var(--text-muted);"> / 42</span></div>
+        <div class="k">Improved by at least one level</div>
+      </div>
+      <div class="stat">
+        <div class="n">6</div>
+        <div class="k">Showed no measurable change</div>
+      </div>
+    </div>
+
+    <hr class="rule">
+
+    <table>
+      <thead>
+        <tr><th>Dimension</th><th class="num">Month 1</th><th class="num">Month 3</th><th>Read</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Objection handling</td><td class="num">2.1</td><td class="num">3.8</td><td>Strongest gain</td></tr>
+        <tr><td>Uncovering interests</td><td class="num">2.0</td><td class="num">3.7</td><td>Strong gain</td></tr>
+        <tr><td>Value framing</td><td class="num">2.4</td><td class="num">3.5</td><td>Improving</td></tr>
+        <tr><td>Assertiveness</td><td class="num">2.9</td><td class="num">3.6</td><td>Improving</td></tr>
+        <tr><td>Concession discipline</td><td class="num">1.9</td><td class="num">2.4</td><td>Weakest — target next</td></tr>
+      </tbody>
+    </table>
+
+    <p class="privacy">
+      <strong>The business gets the evidence. The individual keeps the score.</strong><br>
+      No individual results, names or rankings appear here. Breakdowns below a cohort of five are not shown.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -4,7 +4,6 @@
 # local runtime directories (generated at runtime, not source code)
 _jobs/
 _cache/
-_storage/
 
 # python
 __pycache__/

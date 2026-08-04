@@ -1,0 +1,11 @@
+PowerOne Tiles
+- PowerOne tiles include Salesforce, Epicor Mobile, AI Desktop, Pico Concierge, Partners, and Helpdesk for quick access.
+- Clicking a tile like Helpdesk takes you directly into the related internal system or service portal.
+
+Human Resources Content
+- Human Resources content on the intranet centralizes HR forms, guidance and links instead of scattered emails.
+- Using these pages ensures you follow the same documented procedures as the rest of the company.
+
+Comparing Related Pages
+- Comparing related pages, such as Expense Claim, Per Diem rates and Travel Requisition, helps you understand complete workflows.
+- This approach lets you build clear checklists of required receipts, approvals, and applicable rates.

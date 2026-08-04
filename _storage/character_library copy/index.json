@@ -1,0 +1,50 @@
+[
+  {
+    "char_id": "char_adult_informal",
+    "description": "A cartoon male with beard, wearing a brown jacket, with blue and white checkered shirt, jeans and a brown leather shoes",
+    "tags": [],
+    "image_path": "char_adult_informal.png"
+  },
+  {
+    "char_id": "char_cartoon_female_informal",
+    "description": "",
+    "tags": [],
+    "image_path": "char_cartoon_female_informal.png"
+  },
+  {
+    "char_id": "char_cartoon_male_informal",
+    "description": "",
+    "tags": [],
+    "image_path": "char_cartoon_male_informal.png"
+  },
+  {
+    "char_id": "char_realism_formal_male",
+    "description": "",
+    "tags": [],
+    "image_path": "char_realism_formal_male.png"
+  },
+  {
+    "char_id": "char_realism_informal_female",
+    "description": "",
+    "tags": [],
+    "image_path": "char_realism_informal_female.png"
+  },
+  {
+    "char_id": "char_realism_informal_male",
+    "description": "",
+    "tags": [],
+    "image_path": "char_realism_informal_male.png"
+  },
+  {
+    "char_id": "char_cartoon_female_bunny",
+    "description": "",
+    "tags": [],
+    "image_path": "char_cartoon_female_bunny.png"
+  },
+  {
+    "char_id": "char_cartoon_female_formal",
+    "description": "",
+    "tags": [],
+    "image_path": "char_cartoon_female_formal.png"
+  }
+]

@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1280
+PlayResY: 720
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Box,Hiragino Sans GB,24,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+Style: Text,Hiragino Sans GB,24,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:04.00,0:00:11.99,Box,,0,0,0,,{\pos(318,647)\1c&H000000&\1a&H72&\bord0\shad0\p1}m 12 0 l 632 0 b 644 0 644 0 644 12 l 644 33 b 644 45 644 45 632 45 l 12 45 b 0 45 0 45 0 33 l 0 12 b 0 0 0 0 12 0{\p0}
+Dialogue: 1,0:00:04.00,0:00:11.99,Text,,0,0,0,,{\pos(640,669)}员工每年享有30个日历日的年假，其中包括周五和周六。
+Dialogue: 0,0:00:11.99,0:00:19.97,Box,,0,0,0,,{\pos(298,647)\1c&H000000&\1a&H72&\bord0\shad0\p1}m 12 0 l 672 0 b 684 0 684 0 684 12 l 684 33 b 684 45 684 45 672 45 l 12 45 b 0 45 0 45 0 33 l 0 12 b 0 0 0 0 12 0{\p0}
+Dialogue: 1,0:00:11.99,0:00:19.97,Text,,0,0,0,,{\pos(640,669)}日历日或连续日意味着周末也计入假期，而不仅仅是工作日。
+Dialogue: 0,0:00:20.97,0:00:28.96,Box,,0,0,0,,{\pos(298,647)\1c&H000000&\1a&H72&\bord0\shad0\p1}m 12 0 l 672 0 b 684 0 684 0 684 12 l 684 33 b 684 45 684 45 672 45 l 12 45 b 0 45 0 45 0 33 l 0 12 b 0 0 0 0 12 0{\p0}
+Dialogue: 1,0:00:20.97,0:00:28.96,Text,,0,0,0,,{\pos(640,669)}如果在试用期前发生紧急情况，员工应直接与直属经理讨论。

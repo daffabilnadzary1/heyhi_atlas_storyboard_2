@@ -1,0 +1,2 @@
+{"scene_id": "broll_opening_office", "model": "Veo 3.1 Lite", "task": "image-to-video", "attempts": 1, "status": "ok", "credits_before": 8200.0, "credits_after": 8170.0, "credits_used": 30.0}
+{"scene_id": "scene_intro_1", "model": "Veo 3.1 Fast", "task": "reference-to-video", "attempts": 1, "status": "ok", "credits_before": 8170.0, "credits_after": 8110.0, "credits_used": 60.0}

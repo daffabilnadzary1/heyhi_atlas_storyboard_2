@@ -1,0 +1,334 @@
+"""
+kie.ai Veo 3.1 video generation — test script.
+
+Edit the CONFIG block below, then run:
+    export KIE_API_KEY="your_key_here"     # get one at https://kie.ai/api-key
+    python bench/test_video_kieai.py
+
+Prints your credit balance before/after, the raw submit response, and the
+final record-info payload, then diffs the balance so you see the actual cost.
+
+=============================================================================
+JOB TYPES  ->  generationType + IMAGE_URLS
+=============================================================================
+  text       TEXT_2_VIDEO                   no images, prompt only.
+  image      FIRST_AND_LAST_FRAMES_2_VIDEO  1 image  = animate from that frame
+                                            2 images = first + last frame
+                                                       transition.
+  reference  REFERENCE_2_VIDEO              1+ "material" images the video is
+                                            built from. FAST/LITE MODELS ONLY
+                                            (Quality is not supported here).
+
+  Image inputs should be 16:9 or the service auto-crops them.
+
+  Local files: any entry in IMAGE_URLS that is NOT an http(s) URL is treated
+  as a local path, uploaded to kie.ai's temporary file host, and the returned
+  URL is used automatically. kie.ai fetches images server-side, so a bare
+  local path can't be sent to the generate endpoint directly.
+
+=============================================================================
+PARAMETERS — POST https://api.kie.ai/api/v1/veo/generate  (JSON body)
+=============================================================================
+  prompt              str   (required) text description of the video.
+  imageUrls           list  see JOB TYPES above.
+  duration            int   clip length in seconds (playground offers 4/6/8).
+                            Not shown in the docs' example body — added here
+                            because the playground exposes it. If the API
+                            rejects it, remove DURATION below.
+  model               str   "veo3" (Quality) | "veo3_fast" (Fast) | Lite tier.
+  aspect_ratio        str   "16:9", "9:16", or "Auto". 1080P/4K need 16:9.
+  generationType      str   see JOB TYPES above.
+  watermark           str   optional watermark text ("" = none).
+  enableTranslation   bool  auto-translate non-English prompts (default true).
+  enableFallback      bool  auto-switch to backup model on specific errors;
+                            if false those errors return HTTP 422. A
+                            fallback-generated video is capped at 720p.
+  callBackUrl         str   optional webhook; results POSTed here on completion.
+
+=============================================================================
+RETURN FORMAT
+=============================================================================
+  Submit  -> {"code":200,"msg":"success","data":{"taskId":"veo_task_..."}}
+             HTTP 200 means CREATED, not finished (generation is async).
+
+  GET /api/v1/veo/record-info?taskId=...  ->
+      data.successFlag   0 generating | 1 success | 2 failed | 3 gen failed
+      data.fallbackFlag  true => fallback model used (720p cap)
+      data.response.resultUrls  -> finished video URL(s)  (also originUrls,
+                                   fullResultUrls, resolution)
+  Result URLs are temporary — media is deleted after ~14 days, so download it.
+
+=============================================================================
+CREDIT COST
+=============================================================================
+  No per-request cost field is returned. Measure it by diffing the account
+  balance: GET https://api.kie.ai/api/v1/chat/credit (done automatically).
+  Rates: https://kie.ai/billing & https://kie.ai/pricing (~25% of Google's;
+  4K ~= 2x a Fast generation). Per-task usage: https://kie.ai/logs.
+  Failed tasks are not charged; new accounts get 80 free credits.
+"""
+
+import json
+import os
+import sys
+import time
+from pathlib import Path
+
+import requests
+
+# ============================ CONFIG — edit these ============================
+JOB = "image"                       # "text" | "image" | "reference"
+
+PROMPT = """
+
+Transform the provided image into a 5-second premium editorial documentary paper-collage animation. Preserve the final composition of the provided image exactly. Do not redesign, reposition, resize, or replace any element. The provided image is the FINISHED frame that the animation builds toward.
+
+Style: hand-cut documentary paper collage in motion. Aged newsprint and archival surfaces, halftone photo cutouts, torn edges, tape, stamps, red string, typewriter strips. Every element moves as a rigid physical paper piece. Visible cutout thickness, print grain, soft layered shadows. Stop-motion cadence, stepped easing, 2-3 frame holds, the hand-made "cutting on twos" feel. Never smooth CGI motion.
+
+CAMERA, STRICT: the camera stays completely locked for the entire clip. No zoom, no pan, no tilt, no rotation, no orbit, no dolly, no tracking, no handheld shake, no focus pulls, no reframing, no cuts, no transitions, no morphing, no object replacement, no time skips. One continuous static shot.
+
+0 TO 3.5 SECONDS, BUILD-ON ASSEMBLY: the frame opens on the EMPTY background plate only: the bare aged-newsprint or archival surface with its stains, grain, and any fixed scaffolding (a map base, a timeline line, a corkboard), with every story element absent. Elements then enter one by one, back to front, in narrative order: background scraps settle first, then the hero cutout slides in with paper drag and a small settle, supporting cutouts drop or pin on with a 2-frame stamp settle, tape presses down, typewriter strips slide in, stamps slap on, red string draws itself from pin to pin, marker underlines and arrows draw themselves last. Each entrance lands with a tiny handcrafted bounce and casts a real layered shadow. No element moves again after it lands. By 3.5 seconds the frame exactly matches the provided image.
+
+3.5 TO 5 SECONDS, LIVING PAPER POSTER: everything holds position. Only subtle life remains: paper corners lift a millimeter in a draft, halftone dots shimmer faintly, string tension quivers once, shadows breathe, stamp ink glistens subtly. Nothing changes location, nothing scales, nothing rotates significantly, nothing enters or exits.
+
+AUDIO: no music, no narration, no voices. Only close-up paper ASMR and faint scene-appropriate ambience: paper sliding, cardstock taps, tape press, stamp thud, string zip, pin click, soft room tone. All subtle.
+
+FINAL RULE: the finished clip must feel like a real editorial paper collage assembling itself on a table, then holding as a living poster, matching the provided image exactly from 3.5 seconds to the end.
+"""
+
+MODEL = "veo3"                 # "veo3" (Quality) | "veo3_fast" (Fast) | Lite
+
+# For "image": 1 URL (start frame) or 2 URLs (first + last frame). Order matters.
+# For "reference": 1+ material-image URLs.  For "text": leave empty [].
+IMAGE_URLS = [
+    "bench/_storage/kie.ai/run_run_vox_motion/payroll2.png",
+]
+
+ASPECT_RATIO = "16:9"               # "16:9" | "9:16" | "Auto"
+
+RESOLUTION = "720p"
+
+DURATION = 6                        # seconds: 4 | 6 | 8. Remove from payload
+                                    # (see submit_video) if the API rejects it.
+
+RUN_ID = "run_vox_motion"                       # set manually per run; output goes to
+                                    # _storage/kie.ai/run_<RUN_ID>/.
+
+ALLOW_EXISTING_RUN = True           # True: save into an existing run folder
+                                    # (new files are numbered, never overwriting
+                                    # what's there). False: refuse a non-empty
+                                    # folder so you don't clobber a prior run.
+# ===========================================================================
+
+BASE_URL = "https://api.kie.ai"
+UPLOAD_ENDPOINT = "https://kieai.redpandaai.co/api/file-stream-upload"
+API_KEY = os.environ.get("KIE_API_KEY")
+
+if not API_KEY:
+    sys.exit("Set KIE_API_KEY first:  export KIE_API_KEY='your_key'")
+
+HEADERS = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json",
+}
+
+# Output root, relative to this script so it's the same wherever you run from.
+STORAGE_ROOT = Path(__file__).resolve().parent / "_storage" / "kie.ai"
+
+# job name -> (generationType, min images, max images)
+JOBS = {
+    "text":      ("TEXT_2_VIDEO", 0, 0),
+    "image":     ("FIRST_AND_LAST_FRAMES_2_VIDEO", 1, 2),
+    "reference": ("REFERENCE_2_VIDEO", 1, None),
+}
+
+
+def get_credits():
+    """Return the account's remaining credit balance (or None on failure)."""
+    r = requests.get(f"{BASE_URL}/api/v1/chat/credit", headers=HEADERS, timeout=30)
+    r.raise_for_status()
+    return r.json().get("data")
+
+
+def upload_local(path):
+    """Upload a local file to kie.ai's temporary host; return its public URL."""
+    p = Path(path).expanduser()
+    if not p.is_file():
+        sys.exit(f"Image not found: {p}")
+    with p.open("rb") as fh:
+        # Multipart upload — don't reuse HEADERS (its JSON Content-Type is wrong);
+        # requests sets the multipart boundary itself when `files=` is passed.
+        r = requests.post(
+            UPLOAD_ENDPOINT,
+            headers={"Authorization": f"Bearer {API_KEY}"},
+            files={"file": (p.name, fh)},
+            data={"uploadPath": "veo-inputs"},
+            timeout=120,
+        )
+    r.raise_for_status()
+    url = (r.json().get("data") or {}).get("downloadUrl")
+    if not url:
+        raise RuntimeError(f"Upload returned no downloadUrl: {r.text}")
+    print(f"uploaded {p.name} -> {url}")
+    return url
+
+
+def resolve_image_urls(entries):
+    """Pass http(s) URLs through unchanged; upload everything else as a local file."""
+    return [
+        e if e.startswith(("http://", "https://")) else upload_local(e)
+        for e in entries
+    ]
+
+
+def submit_video(prompt, generation_type, model, aspect_ratio,
+                 duration=None, image_urls=None, resolution=None):
+    """Submit a generation job. Returns the taskId."""
+    payload = {
+        "prompt": prompt,
+        "model": model,
+        "aspect_ratio": aspect_ratio,
+        "generationType": generation_type,
+        "enableTranslation": True,
+        "enableFallback": False,
+    }
+    if duration is not None:          # delete this block if the API rejects it
+        payload["duration"] = duration
+    if resolution:
+        payload["resolution"] = resolution
+    if image_urls:
+        payload["imageUrls"] = image_urls
+
+    r = requests.post(f"{BASE_URL}/api/v1/veo/generate",
+                      headers=HEADERS, json=payload, timeout=30)
+    print("\n--- submit response ---")
+    print(r.status_code, r.text)
+    r.raise_for_status()
+
+    task_id = (r.json().get("data") or {}).get("taskId")
+    if not task_id:
+        raise RuntimeError(f"No taskId returned: {r.text}")
+    return task_id
+
+
+def poll_video(task_id, interval=30, timeout=900):
+    """Poll record-info until the task finishes. Returns the final record."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        r = requests.get(f"{BASE_URL}/api/v1/veo/record-info",
+                         headers=HEADERS, params={"taskId": task_id}, timeout=30)
+        r.raise_for_status()
+        data = r.json().get("data") or {}
+        flag = data.get("successFlag")
+
+        if flag == 1:
+            print("\n--- final record-info (success) ---")
+            print(r.text)
+            return data
+        if flag in (2, 3):
+            print("\n--- final record-info (failed) ---")
+            print(r.text)
+            return data
+
+        print(f"still generating (successFlag={flag})… waiting {interval}s")
+        time.sleep(interval)
+
+    raise TimeoutError(f"Task {task_id} did not finish within {timeout}s")
+
+
+def validate():
+    """Fail fast on the constraints kie.ai documents, before spending a call."""
+    if JOB not in JOBS:
+        sys.exit(f"JOB must be one of {list(JOBS)}; got '{JOB}'.")
+    generation_type, min_imgs, max_imgs = JOBS[JOB]
+    n = len(IMAGE_URLS)
+    if n < min_imgs:
+        sys.exit(f"'{JOB}' needs at least {min_imgs} image URL(s); got {n}.")
+    if max_imgs is not None and n > max_imgs:
+        sys.exit(f"'{JOB}' accepts at most {max_imgs} image URL(s); got {n}.")
+    if JOB == "text" and n:
+        sys.exit("'text' takes no images — empty IMAGE_URLS.")
+    if JOB == "reference" and MODEL == "veo3":
+        sys.exit("Reference-to-video runs on Fast/Lite only — set MODEL = 'veo3_fast'.")
+
+    for entry in IMAGE_URLS:
+        if not entry.startswith(("http://", "https://")) \
+                and not Path(entry).expanduser().is_file():
+            sys.exit(f"Image not found: {entry}")
+
+    run_dir = STORAGE_ROOT / f"run_{RUN_ID}"
+    if run_dir.exists() and any(run_dir.iterdir()) and not ALLOW_EXISTING_RUN:
+        sys.exit(f"{run_dir} already has files — set ALLOW_EXISTING_RUN or bump RUN_ID.")
+    return generation_type
+
+
+def _unique(path):
+    """Return path if free, else path with _2, _3, … so nothing is overwritten."""
+    if not path.exists():
+        return path
+    i = 2
+    while True:
+        candidate = path.with_name(f"{path.stem}_{i}{path.suffix}")
+        if not candidate.exists():
+            return candidate
+        i += 1
+
+
+def save_run(run_id, record):
+    """Write the run metadata and download the result video(s). Returns paths."""
+    run_dir = STORAGE_ROOT / f"run_{run_id}"
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    record_path = _unique(run_dir / "record.json")
+    record_path.write_text(
+        json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    urls = (record.get("response") or {}).get("resultUrls") or []
+    saved = []
+    for i, url in enumerate(urls):
+        name = "video.mp4" if len(urls) == 1 else f"video_{i}.mp4"
+        dest = _unique(run_dir / name)
+        r = requests.get(url, timeout=180)
+        r.raise_for_status()
+        dest.write_bytes(r.content)
+        saved.append(dest)
+    return run_dir, saved
+
+
+def main():
+    generation_type = validate()
+
+    before = get_credits()
+    print(f"Credits before: {before}")
+
+    image_urls = resolve_image_urls(IMAGE_URLS) if IMAGE_URLS else None
+
+    task_id = submit_video(
+        prompt=PROMPT,
+        generation_type=generation_type,
+        model=MODEL,
+        aspect_ratio=ASPECT_RATIO,
+        duration=DURATION,
+        resolution=RESOLUTION,
+        image_urls=image_urls,
+    )
+    print(f"\ntaskId: {task_id}")
+
+    record = poll_video(task_id)
+
+    run_dir, saved = save_run(RUN_ID, record)
+    print(f"\nSaved run to: {run_dir}")
+    print("  record.json")
+    for path in saved:
+        print(f"  {path.name}")
+    if not saved:
+        print("  (no result videos — check record.json for the failure reason)")
+
+    after = get_credits()
+    print(f"\nCredits after: {after}")
+    if isinstance(before, (int, float)) and isinstance(after, (int, float)):
+        print(f"This job consumed: {before - after} credits")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,23 @@
+Berikut materi singkat yang cocok untuk slide onboarding intern.
+
+# Onboarding Intern
+
+## Tujuan Onboarding
+
+* Memahami visi, budaya, dan cara kerja tim.
+* Mengenal tools, workflow, serta standar yang digunakan.
+* Membantu proses adaptasi agar dapat mulai berkontribusi dengan percaya diri.
+
+## Selama Proses Onboarding
+
+* Ikuti seluruh sesi pembelajaran dan dokumentasi yang diberikan.
+* Jangan ragu untuk bertanya apabila terdapat hal yang kurang dipahami.
+* Terapkan materi yang dipelajari melalui latihan dan tugas yang diberikan.
+
+## Harapan Setelah Onboarding
+
+* Memahami alur kerja tim dan tanggung jawab masing-masing.
+* Mampu menggunakan tools yang diperlukan.
+* Siap berkolaborasi dan berkontribusi dalam proyek yang dikerjakan.
+
+Materi ini cukup ringkas sehingga cocok dijadikan 1 slide presentasi onboarding.

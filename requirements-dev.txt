@@ -1,0 +1,9 @@
+# Development / test dependencies. Install on top of requirements.txt:
+#     pip install -r requirements.txt -r requirements-dev.txt
+#
+# The test suite needs the runtime deps too, because it imports the real modules
+# rather than stubbing them — app/config.py imports google.genai at module load,
+# so google-genai must be installed even though no test makes a network call.
+
+pytest>=8.0
+httpx>=0.27          # fastapi.testclient.TestClient needs it; not a runtime dep

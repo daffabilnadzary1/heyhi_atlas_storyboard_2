@@ -1,0 +1,22 @@
+# secrets — never commit
+.env
+
+# local runtime directories (generated at runtime, not source code)
+_jobs/
+_cache/
+_storage/
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# editor — interpreter paths here are machine-specific, don't share them
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

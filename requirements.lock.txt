@@ -1,0 +1,235 @@
+# Atlas — dependency LOCK. Generated 2026-08-02.
+#
+# WHAT THIS IS: a full snapshot of the conda env `heyhi_atlas_ai_video`, which is
+# the environment the pipeline has actually been run end to end in — director,
+# assets, Veo, ElevenLabs, Lyria and render, with the cost log verified against
+# live calls. requirements.txt says what the code imports; THIS file says what
+# was underneath it when it worked.
+#
+# Reach for it when something breaks after an upgrade and you need a known-good
+# set to bisect against. requirements.txt stays the file you install from day to
+# day, because it is readable and its bounds are deliberate.
+#
+# Python 3.14.6 on macOS (darwin/arm64).
+#
+# HOW IT WAS GENERATED — and why not `pip freeze`:
+#
+#     python -m pip list --format=freeze > requirements.lock.txt
+#
+# In a conda environment `pip freeze` writes conda-installed packages as
+#     fastapi @ file:///Users/ec2-user/croot/fastapi-split_1782280679236/work
+# — a build path on the machine that made the conda package, which does not
+# exist anywhere on yours. Nine of the packages below come out that way, fastapi
+# and pydantic among them, so a plain `pip freeze` lock is not installable.
+# `pip list --format=freeze` emits name==version for all of them.
+#
+# CAVEATS, so nobody is surprised:
+#   * This is the WHOLE environment, not just Atlas's dependencies. jupyter,
+#     moviepy, rembg, openai, boto3 and scikit-image are in here because the env
+#     is shared with other work. Pinning them is harmless; treating their
+#     presence as a requirement is not.
+#   * faster-whisper IS installed here, which is why diarizer="whisper" works
+#     today (open-questions #16). requirements.txt still lists it as optional
+#     and commented out — a fresh install does not get it.
+#   * Not cross-platform. ctranslate2, onnxruntime, av and numba ship compiled
+#     wheels; these versions are what resolved for macOS arm64.
+#   * ffmpeg and ffprobe are still not in here. They are not pip packages. See
+#     requirements.txt.
+#
+# Regenerate after any deliberate upgrade that you have then verified with a full
+# live run — not after a casual `pip install`.
+
+aiohappyeyeballs==2.6.2
+aiohttp==3.14.1
+aiosignal==1.4.0
+annotated-doc==0.0.4
+annotated-types==0.6.0
+anyio==4.12.1
+appnope==0.1.4
+argon2-cffi-bindings==25.1.0
+argon2-cffi==25.1.0
+arrow==1.4.0
+asttokens==3.0.1
+async-lru==2.3.0
+attrs==26.1.0
+av==18.0.0
+azure-cognitiveservices-speech==1.50.0
+azure-core==1.41.0
+babel==2.18.0
+beautifulsoup4==4.15.0
+bleach==6.4.0
+boto3==1.43.36
+botocore==1.43.36
+brotlicffi==1.2.0.0
+certifi==2026.6.17
+cffi==2.0.0
+charset-normalizer==3.4.7
+click==8.4.2
+comm==0.2.3
+cryptography==49.0.0
+ctranslate2==4.8.1
+debugpy==1.8.21
+decorator==5.3.1
+defusedxml==0.7.1
+distro==1.9.0
+dnspython==2.8.0
+edge-tts==7.2.8
+elevenlabs==2.58.0
+email-validator==2.3.0
+executing==2.2.1
+fastapi-cli==0.0.20
+fastapi==0.138.0
+fastar==0.11.0
+faster-whisper==1.2.1
+fastjsonschema==2.21.2
+filelock==3.31.2
+flatbuffers==25.12.19
+fqdn==1.5.1
+frozenlist==1.8.0
+fsspec==2026.6.0
+google-auth==2.55.0
+google-genai==2.10.0
+h11==0.16.0
+hf-xet==1.5.2
+httpcore==1.0.9
+httptools==0.8.0
+httpx==0.28.1
+huggingface_hub==1.24.0
+idna==3.18
+imageio-ffmpeg==0.6.0
+ImageIO==2.37.3
+iniconfig==2.3.0
+ipykernel==7.3.0
+ipython==9.15.0
+ipython_pygments_lexers==1.1.1
+ipywidgets==8.1.8
+isoduration==20.11.0
+jedi==0.20.0
+Jinja2==3.1.6
+jiter==0.12.0
+jmespath==1.1.0
+json5==0.15.0
+jsonpointer==3.1.1
+jsonschema-specifications==2025.9.1
+jsonschema==4.26.0
+jupyter-console==6.6.3
+jupyter-events==0.12.1
+jupyter-lsp==2.3.1
+jupyter==1.1.1
+jupyterlab==4.6.1
+jupyterlab_pygments==0.3.0
+jupyterlab_server==2.28.0
+jupyterlab_widgets==3.0.16
+jupyter_builder==1.0.2
+jupyter_client==8.9.1
+jupyter_core==5.9.1
+jupyter_server==2.20.0
+jupyter_server_terminals==0.5.4
+langdetect==1.0.9
+lark==1.3.1
+lazy-loader==0.5
+llvmlite==0.47.0
+lxml==6.1.1
+markdown-it-py==4.0.0
+MarkupSafe==3.0.2
+matplotlib-inline==0.2.2
+mdurl==0.1.2
+mistune==3.3.3
+moviepy==2.2.1
+multidict==6.7.1
+nbclient==0.11.0
+nbconvert==7.17.1
+nbformat==5.10.4
+nest-asyncio2==1.7.2
+networkx==3.6.1
+notebook==7.6.0
+notebook_shim==0.2.4
+numba==0.65.1
+numpy==2.4.6
+onnxruntime==1.27.0
+openai==2.30.0
+packaging==26.2
+pandocfilters==1.5.1
+parso==0.8.7
+pexpect==4.9.0
+pillow==11.3.0
+pip==26.1.1
+platformdirs==4.10.0
+pluggy==1.6.0
+pooch==1.9.0
+proglog==0.1.12
+prometheus_client==0.25.0
+prompt_toolkit==3.0.52
+propcache==0.5.2
+protobuf==7.35.1
+psutil==7.2.2
+ptyprocess==0.7.0
+pure_eval==0.2.3
+pyasn1==0.6.3
+pyasn1_modules==0.4.2
+pycparser==3.0
+pydantic-extra-types==2.11.0
+pydantic-settings==2.12.0
+pydantic==2.13.4
+pydantic_core==2.46.4
+Pygments==2.20.0
+PyMatting==1.1.15
+pypdf==6.14.2
+PySocks==1.7.1
+pytest==9.1.1
+python-dateutil==2.9.0.post0
+python-docx==1.2.0
+python-dotenv==1.2.1
+python-json-logger==4.1.0
+python-multipart==0.0.29
+python-pptx==1.0.2
+PyYAML==6.0.3
+pyzmq==27.1.0
+referencing==0.37.0
+regex==2026.5.9
+rembg==2.0.76
+requests==2.34.2
+rfc3339-validator==0.1.4
+rfc3986-validator==0.1.1
+rfc3987-syntax==1.1.0
+rich-toolkit==0.17.1
+rich==14.2.0
+rpds-py==2026.6.3
+s3transfer==0.18.0
+scikit-image==0.26.0
+scipy==1.18.0
+Send2Trash==2.1.0
+setuptools==83.0.0
+shellingham==1.5.4
+six==1.17.0
+sniffio==1.3.1
+soupsieve==2.8.4
+stack-data==0.6.3
+starlette==1.3.1
+tabulate==0.10.0
+tenacity==9.1.4
+terminado==0.18.1
+tifffile==2026.6.1
+tiktoken==0.13.0
+tinycss2==1.5.1
+tokenizers==0.23.1
+tornado==6.5.7
+tqdm==4.68.2
+traitlets==5.15.1
+typer==0.25.1
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+tzdata==2026.2
+uri-template==1.3.0
+urllib3==2.7.0
+uvicorn==0.40.0
+uvloop==0.22.1
+watchfiles==1.2.0
+wcwidth==0.8.2
+webcolors==25.10.0
+webencodings==0.5.1
+websocket-client==1.9.0
+websockets==16.0
+widgetsnbextension==4.0.15
+xlsxwriter==3.2.9
+yarl==1.24.2

@@ -1,0 +1,32 @@
+[
+  {
+    "transition_id": "swipe_yellow",
+    "file": "arrow_wipe_yellow.mov",
+    "roles": ["opening"],
+    "aspect_ratio": "16:9"
+  },
+  {
+    "transition_id": "rotation_circle_blue",
+    "file": "circle_rotation_blue.mov",
+    "roles": ["closing"],
+    "aspect_ratio": "16:9"
+  },
+  {
+    "transition_id": "rotation_circle_yellow",
+    "file": "circle_rotation_yellow.mov",
+    "roles": ["closing"],
+    "aspect_ratio": "16:9"
+  },
+  {
+    "transition_id": "square_rounded_orange",
+    "file": "rounded_squares_orange.mov",
+    "roles": ["opening", "closing"],
+    "aspect_ratio": "16:9"
+  },
+  {
+    "transition_id": "square_rounded_yellow",
+    "file": "rounded_squares_yellow.mov",
+    "roles": ["opening", "closing"],
+    "aspect_ratio": "16:9"
+  }
+]

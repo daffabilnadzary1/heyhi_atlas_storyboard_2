@@ -1,0 +1,66 @@
+# Atlas — runtime dependencies
+#
+# Python 3.11+ required (3.13 is what this has been run on). The pydantic models
+# use `X | None` annotations that pydantic resolves at class-creation time, which
+# is a TypeError on 3.9/3.10. macOS system Python will not run this.
+#
+# DERIVED FROM IMPORTS. The lower bounds below are the minimum the code needs;
+# upper bounds are absent on purpose, because a bound nobody has tested is just a
+# guess that ages badly.
+#
+# For the versions that are known to work, see requirements.lock.txt — a full
+# snapshot of the environment the pipeline has been run end to end in, taken
+# 2026-08-02. Install from THIS file; reach for the lock when an upgrade breaks
+# something and you need a working set to compare against. Three surfaces are
+# explicitly version-sensitive and will break silently on an upgrade — see the
+# notes at the bottom.
+
+# --- API layer -------------------------------------------------------------
+fastapi>=0.110
+uvicorn[standard]>=0.27
+python-multipart>=0.0.9      # NOT imported directly; FastAPI needs it for
+                             # Form()/UploadFile in /pipeline/upload
+pydantic>=2.7                # v2 only: model_validate / model_dump / ConfigDict
+
+# --- config ----------------------------------------------------------------
+python-dotenv>=1.0
+
+# --- providers -------------------------------------------------------------
+google-genai>=1.0            # director, Gemini image, Veo, Lyria, diarization
+elevenlabs>=1.0              # speech-to-speech + paginated voice list
+azure-cognitiveservices-speech>=1.37   # only needed for tts_provider="azure"
+requests>=2.31               # kie.ai client only (video_provider="kieai")
+
+# --- media -----------------------------------------------------------------
+Pillow>=10.0                 # boxed subtitles + cartoon title glyph metrics
+
+# ffmpeg and ffprobe are NOT pip packages. Install them separately and make sure
+# both are on PATH:
+#     brew install ffmpeg          # macOS
+#     apt install ffmpeg           # Debian/Ubuntu
+
+# --- optional --------------------------------------------------------------
+# faster-whisper — WhisperDiarizer (external_tts.py) and bench/diarize_local.py.
+# Selectable per request since 2026-08-02: POST /pipeline/scenes with
+# diarizer="whisper" runs word timing locally instead of spending a Gemini call
+# per speaking scene. Left commented because it is genuinely optional: the import
+# is inside diarize(), so the pipeline starts and runs fine without it, and
+# installing it pulls in ctranslate2 + av + onnxruntime and downloads a model
+# (~150MB for "base") on the first call. Uncomment if you use that path.
+# faster-whisper>=1.0
+
+# --- deliberately absent ---------------------------------------------------
+# boto3 — .env carries S3 keys but no code reads them. Storage is always local.
+# openai / deepseek SDKs — .env carries keys, nothing in new_code_v2 uses them.
+
+# --- version-sensitive surfaces (flagged in code comments) -----------------
+# google-genai:
+#   * Veo model ids in video_veo_client.GeminiVeoClient._MODEL_IDS
+#     ("veo-3.1-fast-generate-preview" / "veo-3.1-lite-generate-preview")
+#   * the generate_videos / operations.get polling shape
+#   * image extraction via part.inline_data.data (image_gen.GeminiImageClient)
+#   * types.VideoGenerationReferenceImage(reference_type="asset")
+# elevenlabs:
+#   * voices.search() response shape — sts_elevenlabs_client._get() tolerates
+#     both objects and dicts BECAUSE this has already changed once.
+# Verify all of the above on the first live run after any upgrade.

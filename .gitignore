@@ -9,6 +9,9 @@ _cache/
 _storage/atlas_storyboard/
 bench/_storage/
 
+# local SCORM test extraction, not source
+atlas_scorm2004_test/
+
 # the libraries below are source assets, keep them tracked
 !_storage/character_library/
 !_storage/audio_library/
